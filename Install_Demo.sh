@@ -17,9 +17,7 @@ dependencies=("依赖1" "依赖2")
 mkdir -p /root/data/script
 download_path="/root/data/script"
 
-#依赖安装部分（此脚本不使用额外依赖，无需安装）
 echo "安装依赖中..."
-
 # 检查系统发行版，并根据不同发行版使用不同的包管理工具安装依赖
 if command -v apt-get >/dev/null 2>&1; then
     # Debian/Ubuntu
@@ -38,12 +36,13 @@ else
     exit 1
 fi
 
+echo "依赖安装完成，开始下载脚本..."
 #下载主脚本到指定文件夹并赋予执行权限
 if sudo wget -O "$download_path/$script_name" "$main_script_url" && sudo chmod +x "$download_path/$script_name"; then
     echo "所需依赖已全部安装成功，此脚本即将自动删除"
     echo "请输入-> sudo $download_path/$script_name <-进行运行所需脚本"
     rm "$0" # 删除当前脚本
 else
-    echo "下载失败脚本，依赖安装成功，请检查下载失败原因!"
+    echo "下载脚本失败，依赖安装成功，请检查下载失败原因!"
     rm "$0" # 删除当前脚本
 fi

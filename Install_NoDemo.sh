@@ -20,6 +20,6 @@ if sudo wget -O "$download_path/$script_name" "$main_script_url" && sudo chmod +
     echo "请输入-> sudo $download_path/$script_name <-进行运行所需脚本"
     rm "$0" # 删除当前脚本
 else
-    echo "下载失败脚本，依赖安装成功，请检查下载失败原因!"
+    echo "下载脚本失败，依赖安装成功，请检查下载失败原因!"
     rm "$0" # 删除当前脚本
 fi
