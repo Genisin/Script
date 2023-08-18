@@ -56,7 +56,7 @@ else
                 pacman -Syu --noconfirm
                 pacman -S --noconfirm "$dep"
             else
-                echo "抱歉，该系统无法安装依赖 $dep"
+                echo "抱歉，无法为该系统无法安装依赖 $dep"
                 echo "为不占用您的系统空间，将自动删除脚本！"
                 rm "$0" # 删除当前脚本
                 exit 1
