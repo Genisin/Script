@@ -37,8 +37,8 @@ else
 fi
 
 echo "依赖安装完成，开始下载脚本..."
-#下载主脚本到指定文件夹并赋予执行权限   -O "$download_path/$script_name"  && sudo chmod +x "$download_path/$script_name"
-if sudo wget "$main_script_url"; then
+#下载主脚本到指定文件夹并赋予执行权限
+if sudo wget -O  "$download_path/$script_name"  "$main_script_url"  &&  sudo chmod +x  "$download_path/$script_name" ; then
     echo "所需依赖已全部安装成功，此脚本即将自动删除"
     echo "请输入-> sudo $download_path/$script_name [b|t|s] <-进行运行所需脚本"
     rm "$0" # 删除当前脚本
