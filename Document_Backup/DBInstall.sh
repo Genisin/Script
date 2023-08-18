@@ -74,7 +74,9 @@ if sudo wget -O "$download_path/$script_name" "$main_script_url" && sudo chmod +
     echo "发现已有依赖：${existing_deps[*]}"
     echo "成功安装依赖：${missing_deps[*]}"
     echo "已具备运行脚本的所有依赖，此脚本任务结束，即将自动删除"
-    echo "请输入-> sudo $download_path/$script_name <-进行运行"
+    echo "请输入-> sudo $download_path/$script_name [b|t|s] <-进行运行(b是备份,t是迁移,s是备份+迁移)"
+    echo "迁移需要目标服务器用户名@IP，端口号和密码"
+    echo "可以手动修改，将目标服务器信息写入脚本，但是出于安全性考虑：不建议！"
     rm "$0" # 删除当前脚本
 else
     echo "发现已有依赖：${existing_deps[*]}"
