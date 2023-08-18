@@ -1,12 +1,12 @@
 #!/bin/bash
 
 #依赖下载安装和主脚本下载！！！ 替换域名为 -> raw.githubusercontent.com <-
-#wget -O Dyinstall.sh https://raw.githubusercontent.com/Genisin/script/blob/main/System_Info/SIInstall.sh && chmod +x Dyinstall.sh && sudo ./Dyinstall.sh
+#wget -O Dyinstall.sh https://github.com/Genisin/script/raw/main/System_Info/SIInstall.sh && chmod +x Dyinstall.sh && sudo ./Dyinstall.sh
  
 # 脚本名字
 script_name="System_Info.sh"
 #脚本下载地址 
-main_script_url= "https://raw.githubusercontent.com/Genisin/script/blob/main/System_Info/main.sh"
+main_script_url= "https://github.com/Genisin/script/raw/main/System_Info/main.sh"
 
 #创建主脚本下载路径
 mkdir -p /root/data/script
