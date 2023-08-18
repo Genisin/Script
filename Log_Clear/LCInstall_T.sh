@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #依赖下载安装和主脚本下载
-#curl -o Dyinstall.sh https://github.com/Genisin/script/blob/main/Log_Clear/LCInstall_T.sh ;chmod +x install.sh;./Dyinstall.sh
+#curl -o Dyinstall.sh https://github.com/Genisin/script/blob/main/Log_Clear/LCInstall_T.sh ;chmod +x Dyinstall.sh;sudo ./Dyinstall.sh
  
 # 定义脚本名变量
 script_name="logclear.sh"
