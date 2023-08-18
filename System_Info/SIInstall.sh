@@ -14,10 +14,8 @@ main_script_url="https://raw.githubusercontent.com/Genisin/script/main/System_In
 mkdir -p /root/data/script
 download_path="/root/data/script"
 
-folder_path="/root/data/script"
-
 # 使用 test 命令检查写入权限
-if [ -w "$folder_path" ]; then
+if [ -w "$download_path" ]; then
     echo "具有写入权限"
 else
     echo "没有写入权限"
