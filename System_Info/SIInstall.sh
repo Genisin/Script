@@ -3,7 +3,7 @@
 # 替换blob为   -> raw <-
 
 #依赖下载安装和主脚本下载
-#    wget -O Dyinstall.sh https://github.com/Genisin/script/raw/main/System_Info/SIInstall.sh && chmod +x Dyinstall.sh && sudo ./Dyinstall.sh
+#   sudo wget -O Dyinstall.sh https://github.com/Genisin/script/raw/main/System_Info/SIInstall.sh && chmod +x Dyinstall.sh && sudo ./Dyinstall.sh
  
 # 脚本名字
 script_name="System_Info.sh"
@@ -14,18 +14,8 @@ main_script_url="https://raw.githubusercontent.com/Genisin/script/main/System_In
 mkdir -p /root/data/script
 download_path="/root/data/script"
 
-# 使用 test 命令检查写入权限
-if [ -w "$download_path" ]; then
-    echo "具有写入权限"
-else
-    echo "没有写入权限"
-fi
-
 #下载主脚本到指定文件夹并赋予执行权限
-wget -O "$download_path/$script_name" "$main_script_url"
-
-#赋予执行权限
-chmod +x "$download_path/$script_name"
+sudo wget -O "$download_path/$script_name" "$main_script_url" && chmod +x "$download_path/$script_name"
 
 echo "所需依赖已全部安装成功，此脚本即将自动删除"
 echo "请输入-> sudo $download_path/$script_name  <-进行运行所需脚本"
