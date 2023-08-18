@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #依赖下载安装和主脚本下载
-#curl -o Dyinstall.sh https://github.com/Genisin/script/raw/main/Log_Clear/LCInstall_T.sh && chmod +x Dyinstall.sh && sudo ./Dyinstall.sh
+#wget -o Dyinstall.sh https://github.com/Genisin/script/raw/main/Log_Clear/LCInstall_T.sh && chmod +x Dyinstall.sh && sudo ./Dyinstall.sh
  
 # 定义脚本名变量
 script_name="logclear.sh"
@@ -11,7 +11,7 @@ mkdir -p /root/data/script
 download_path="/root/data/script"
 
 #下载主脚本到指定文件夹
-curl -o "$download_path/$script_name" https://github.com/Genisin/script/raw/main/Log_Clear/main.sh;
+wget -o "$download_path/$script_name" https://github.com/Genisin/script/raw/main/Log_Clear/main.sh;
 
 # 赋予执行权限
 chmod +x "$download_path/$script_name"
