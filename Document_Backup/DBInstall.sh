@@ -1,5 +1,5 @@
 #!/bin/bash
-declare -a existing_deps=()
+
 ####依次修改：依赖安装脚本的文件原始内容链接 -> 脚本名 -> 主脚本的文件的原始内容链接 -> 添加依赖
 # 替换blob为   -> raw <-
 #修改完成后赋值此段代码进行运行
@@ -13,11 +13,8 @@ main_script_url="https://github.com/Genisin/script/raw/main/Document_Backup/main
 # 定义要安装的依赖名称
 dependencies=("rsync" "sshpass")
 
-# 创建主脚本下载路径
-mkdir -p /root/data/script
-download_path="/root/data/script"
-
 # 检查依赖是否已经安装
+echo "检查依赖..."
 check_dependencies() {
     local missing_deps=()
     existing_deps=()
@@ -40,7 +37,6 @@ check_dependencies() {
     fi
 }
 
-echo "检查依赖..."
 if check_dependencies; then
     echo "已有依赖：${existing_deps[*]}"
     echo "所有依赖已经安装，无需操作。"
@@ -67,6 +63,10 @@ else
         fi
     done
 fi
+
+# 创建主脚本下载路径
+mkdir -p /root/data/script
+download_path="/root/data/script"
 
 echo "依赖安装完成，开始下载脚本..."
 # 下载主脚本到指定文件夹并赋予执行权限
