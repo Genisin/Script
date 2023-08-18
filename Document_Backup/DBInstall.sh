@@ -45,15 +45,12 @@ else
         if ! command -v "$dep" >/dev/null 2>&1; then
             if command -v apt-get >/dev/null 2>&1; then
                 # Debian/Ubuntu
-                apt-get update
                 apt-get install -y "$dep"
             elif command -v yum >/dev/null 2>&1; then
                 # CentOS/RHEL
-                yum update
                 yum install -y "$dep"
             elif command -v pacman >/dev/null 2>&1; then
                 # Arch Linux
-                pacman -Syu --noconfirm
                 pacman -S --noconfirm "$dep"
             else
                 echo "抱歉，无法为该系统无法安装依赖"
