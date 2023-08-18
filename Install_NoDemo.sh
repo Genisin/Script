@@ -14,10 +14,9 @@ download_path="/root/data/script"
 
 #下载主脚本到指定文件夹并赋予执行权限
 if sudo wget -O "$download_path/$script_name"  "$main_script_url"  &&  sudo chmod +x "$download_path/$script_name" ; then
-    echo "所需依赖已全部安装成功，此脚本即将自动删除"
     echo "请输入-> sudo $download_path/$script_name <-进行运行所需脚本"
     rm "$0" # 删除当前脚本
 else
-    echo "下载脚本失败，依赖安装成功，请检查下载失败原因!"
+    echo "下载脚本失败，请再次尝试！（若多次尝试仍无法下载，建议手动下载）!"
     rm "$0" # 删除当前脚本
 fi
