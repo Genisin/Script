@@ -38,8 +38,7 @@ check_dependencies() {
 }
 
 if check_dependencies; then
-    echo "已有依赖：${existing_deps[*]}"
-    echo "所有依赖已经安装，无需操作。"
+    echo "所有依赖已经安装，无需操作"
 else
     echo "安装依赖中..."
     for dep in "${dependencies[@]}"; do
@@ -58,6 +57,8 @@ else
                 pacman -S --noconfirm "$dep"
             else
                 echo "抱歉，该系统无法安装依赖 $dep"
+                echo "为不占用您的系统空间，将自动删除脚本！"
+                rm "$0" # 删除当前脚本
                 exit 1
             fi
         fi
@@ -72,13 +73,13 @@ echo "依赖安装完成，开始下载脚本..."
 # 下载主脚本到指定文件夹并赋予执行权限
 if sudo wget -O "$download_path/$script_name" "$main_script_url" && sudo chmod +x "$download_path/$script_name"; then
     echo "发现已有依赖：${existing_deps[*]}"
-    echo "成功安装依赖：${dependencies[*]}"
+    echo "成功安装依赖：${missing_deps[*]}"
     echo "已具备运行脚本所有依赖，此脚本即将自动删除"
     echo "请输入-> sudo $download_path/$script_name <-进行运行"
     rm "$0" # 删除当前脚本
 else
     echo "发现已有依赖：${existing_deps[*]}"
-    echo "成功安装依赖：${dependencies[*]}"
-    echo "下载脚本失败，请检查下载失败原因!"
+    echo "成功安装依赖：${missing_deps[*]}"
+    echo "下载脚本失败，请再次尝试！（若多次尝试仍无法下载，建议手动下载）!"
     rm "$0" # 删除当前脚本
 fi
