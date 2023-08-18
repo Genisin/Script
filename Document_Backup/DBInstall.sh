@@ -13,11 +13,13 @@ main_script_url="https://github.com/Genisin/script/raw/main/Document_Backup/main
 # 定义要安装的依赖名称
 dependencies=("rsync" "sshpass")
 
+# 定义全局变量用于存储已有依赖和安装的依赖
+existing_deps=()
+missing_deps=()
+
 # 检查依赖是否已经安装
 echo "检查依赖..."
 check_dependencies() {
-    local missing_deps=()
-    existing_deps=()
     for dep in "${dependencies[@]}"; do
         if command -v "$dep" >/dev/null 2>&1; then
             existing_deps+=("$dep")
