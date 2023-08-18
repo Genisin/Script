@@ -4,7 +4,7 @@
 # 替换blob为   -> raw <-
 #修改完成后赋值此段代码进行运行
 #    sudo wget -O Dyinstall.sh https://github.com/Genisin/script/raw/main/Document_Backup/DBInstall.sh && chmod +x Dyinstall.sh && sudo ./Dyinstall.sh
-#    sudo wget -O Dyinstall.sh https://github.com/Genisin/script/raw/main/Document_Backup/main.sh && chmod +x Dyinstall.sh && sudo ./Dyinstall.sh
+
 # 脚本名字
 script_name="Document_Backup.sh"
 #脚本下载地址 
