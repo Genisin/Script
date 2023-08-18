@@ -71,14 +71,14 @@ download_path="/root/data/script"
 echo "依赖安装完成，开始下载脚本..."
 # 下载主脚本到指定文件夹并赋予执行权限
 if sudo wget -O "$download_path/$script_name" "$main_script_url" && sudo chmod +x "$download_path/$script_name"; then
-    echo "已有依赖：${existing_deps[*]}"
+    echo "发现已有依赖：${existing_deps[*]}"
     echo "成功安装依赖：${dependencies[*]}"
-    echo "所需依赖已全部安装成功，此脚本即将自动删除"
-    echo "请输入-> sudo $download_path/$script_name <-进行运行所需脚本"
+    echo "已具备运行脚本所有依赖，此脚本即将自动删除"
+    echo "请输入-> sudo $download_path/$script_name <-进行运行"
     rm "$0" # 删除当前脚本
 else
-    echo "已有依赖：${existing_deps[*]}"
+    echo "发现已有依赖：${existing_deps[*]}"
     echo "成功安装依赖：${dependencies[*]}"
-    echo "下载脚本失败，依赖安装成功，请检查下载失败原因!"
+    echo "下载脚本失败，请检查下载失败原因!"
     rm "$0" # 删除当前脚本
 fi
