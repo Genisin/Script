@@ -9,10 +9,13 @@ log_dir="/var/log"
 max_log_size=1048576  # 1MB 
 logpath="/var/log/logclear.log"
 
-# 获取日志文件列表
-log_files=("$log_dir"/*.log)
+# 使用 find 命令获取所有子文件夹中的 .log 文件并将结果保存到 log_files 数组
+log_files=()
+while IFS= read -r -d $'\0' file; do
+    log_files+=("$file")
+done < <(find "$log_dir" -name "*.log" -print0)
 
-# 遍历日志文件列表
+# 遍历日志文件列表并进行清理
 for log_file in "${log_files[@]}"; do
     # 获取当前日志文件大小
     current_size=$(du -b "$log_file" | awk '{print $1}')
@@ -20,9 +23,9 @@ for log_file in "${log_files[@]}"; do
     if [ "$current_size" -gt "$max_log_size" ]; then
         > "$log_file"
         echo "日志已清理 - $log_file"
-        echo "$(date +'%Y-%m-%d %H:%M:%S') - 日志已清理" - $log_file >> "$logpath"
+        echo "$(date +'%Y-%m-%d %H:%M:%S') - 日志已清理 - $log_file" >> "$logpath"
     else
         echo "日志未达到清理条件 - $log_file"
-        echo "$(date +'%Y-%m-%d %H:%M:%S') - 日志未达到清理条件" - $log_file >> "$logpath"
+        echo "$(date +'%Y-%m-%d %H:%M:%S') - 日志未达到清理条件 - $log_file" >> "$logpath"
     fi
 done
