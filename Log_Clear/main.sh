@@ -7,7 +7,7 @@
 
 log_dir="/var/log"
 max_log_size=1048576  # 1MB 
-logpath="/var/log/loglimit.log"
+logpath="/var/log/logclear.log"
 
 # 获取日志文件列表
 log_files=("$log_dir"/*.log)
