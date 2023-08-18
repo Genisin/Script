@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #依赖下载安装和主脚本下载！！！ 替换域名为 -> raw.githubusercontent.com <-
-#wget -O Dyinstall.sh https://raw.githubusercontent.com/Genisin/script/edit/main/System_Info/SIInstall.sh && chmod +x Dyinstall.sh && sudo ./Dyinstall.sh
+#wget -O Dyinstall.sh https://raw.githubusercontent.com/Genisin/script/blob/main/System_Info/SIInstall.sh && chmod +x Dyinstall.sh && sudo ./Dyinstall.sh
  
 # 脚本名字
 script_name="System_Info.sh"
