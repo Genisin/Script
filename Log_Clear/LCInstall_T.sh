@@ -11,7 +11,7 @@ mkdir -p /root/data/script
 download_path="/root/data/script"
 
 #下载主脚本到指定文件夹
-curl -o "$download_path/$script_name" hhttps://github.com/Genisin/script/blob/main/Log_Clear/main.sh;
+curl -o "$download_path/$script_name" https://github.com/Genisin/script/blob/main/Log_Clear/main.sh;
 
 # 赋予执行权限
 chmod +x "$download_path/$script_name"
