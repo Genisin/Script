@@ -11,10 +11,11 @@ mkdir -p /root/data/script
 download_path="/root/data/script"
 
 #下载主脚本到指定文件夹
-wget -O "$download_path/$script_name" https://github.com/Genisin/script/raw/main/Log_Clear/main.sh;
+#https://github.com/Genisin/script/blob/main/Log_Clear/main.sh
+wget -O "$download_path/$script_name" https://github.com/Genisin/script/raw/main/Log_Clear/main.sh && chmod +x "$download_path/$script_name"
 
 # 赋予执行权限
-chmod +x "$download_path/$script_name"
+#chmod +x "$download_path/$script_name"
 echo "所需依赖已全部安装成功，请输入sudo $download_path/$script_name运行"
 
 #删除此脚本（此脚本是为检测依赖是否安装并下载主脚本）
