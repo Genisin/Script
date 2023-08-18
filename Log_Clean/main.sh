@@ -7,7 +7,7 @@
 
 log_dir="/var/log"
 max_log_size=1048576  # 1MB 
-logpath="/var/log/logclear.log"
+logpath="/var/log/logclean.log"
 
 # 使用 find 命令获取所有子文件夹中的 .log 文件并将结果保存到 log_files 数组
 log_files=()
