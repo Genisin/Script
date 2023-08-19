@@ -2,12 +2,12 @@
 ####依次修改：依赖安装脚本的文件原始内容链接 -> 脚本名 -> 主脚本的文件的原始内容链接
 # 替换blob为   -> raw <-
 #修改完成后赋值此段代码进行运行
-#    sudo wget -O Dyinstall.sh https://github.com/Genisin/script/raw/main/System_Info/SIInstall.sh && chmod +x Dyinstall.sh && sudo ./Dyinstall.sh
+#    sudo wget -O Dyinstall.sh https://raw.githubusercontent.com/Genisin/script/main/System_Info/SIInstall.sh && chmod +x Dyinstall.sh && sudo ./Dyinstall.sh
  
 # 脚本名字
 script_name="System_Info.sh"
 #脚本下载地址 
-main_script_url= "https://raw.githubusercontent.com/Genisin/script/main/System_Info/main.sh"
+main_script_url= "https://github.com/Genisin/script/blob/main/System_Info/main.sh"
 
 #创建主脚本下载路径
 mkdir -p /root/data/script
