@@ -3,7 +3,7 @@
 ####依次修改：依赖安装脚本的文件原始内容链接 -> 脚本名 -> 主脚本的文件的原始内容链接 -> 添加依赖
 # 替换blob为   -> raw.githubusercontent.com <-
 #修改完成后赋值此段代码进行运行
-#    sudo wget -N -O Dyinstall.sh 依赖安装脚本的文件原始内容链接 && chmod +x Dyinstall.sh && sudo ./Dyinstall.sh
+#    sudo wget -L -O Dyinstall.sh 依赖安装脚本的文件原始内容链接 && chmod +x Dyinstall.sh && sudo ./Dyinstall.sh
  
 # 脚本名字
 script_name="脚本名.sh"
@@ -69,7 +69,7 @@ fi
 
 echo "依赖安装完成，开始下载脚本..."
 # 下载主脚本到指定文件夹并赋予执行权限
-if sudo wget -N -O "$download_path/$script_name" "$main_script_url" && sudo chmod +x "$download_path/$script_name"; then
+if sudo wget -L -O "$download_path/$script_name" "$main_script_url" && sudo chmod +x "$download_path/$script_name"; then
     echo "发现已有依赖：${existing_deps[*]}"
     echo "现已具备依赖：${dependencies[*]}"
     echo "已具备运行脚本的所有依赖，此脚本任务结束，即将自动删除"
