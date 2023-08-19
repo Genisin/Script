@@ -37,6 +37,8 @@ function perform_backup {
 
     # 清理多余备份文件
     cleanup_backups
+
+    echo "${green}数据备份完成，请查看/root/data文件夹{plain}"
     echo "$(date +'%Y-%m-%d %H:%M:%S') - 备份完成">> "$logpath"
 }
 
@@ -63,10 +65,10 @@ function transfer_to_server {
     echo "数据传输中，请耐心等待..."
     sshpass -p "$remote_password" scp -P "$target_port" "$latest_backup" "$target_server:$target_path"
     if [ $? -eq 0 ]; then
-        echo "数据传输完成，请检查目标服务器相应路径！"
+        echo "${green}数据传输完成，请检查目标服务器相应路径！{plain}"
         echo "$(date +'%Y-%m-%d %H:%M:%S') - 传输完成" >> "$logpath"
     else
-        echo "传输失败，请检查输入信息是否正确！"
+        echo "${green}传输失败，请检查输入信息是否正确！{plain}"
         read -p $'选择操作：\n 0.退出脚本 \n 1.重新进行传输 \n 请输入：[0/1]: ' choice
 
         case "$choice" in
