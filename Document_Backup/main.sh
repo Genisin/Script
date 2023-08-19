@@ -51,8 +51,8 @@ function cleanup_backups {
 function transfer_to_server {
     echo "传输启动"
     read -p  "请输入目标服务器地址（用户名@IP）: " target_server
-    read -p  "       请输入目标服务器SSH端口号: " target_port
-    read -p  "     请输入远程服务器的SSH连接密码: " remote_password
+    read -p  "        请输入目标服务器SSH端口号: " target_port
+    read -p  "    请输入远程服务器的SSH连接密码: " remote_password
 
     # 使用 sshpass 执行 scp 命令
     echo "查找最新备份文件中，请耐心等待..."
