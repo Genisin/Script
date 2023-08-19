@@ -38,7 +38,7 @@ function perform_backup {
     # 清理多余备份文件
     cleanup_backups
 
-    echo "${green}数据备份完成，请查看/root/data文件夹{plain}"
+    echo "${green}数据备份完成，请查看/root/data文件夹${plain}"
     echo "$(date +'%Y-%m-%d %H:%M:%S') - 备份完成">> "$logpath"
 }
 
@@ -55,9 +55,9 @@ function cleanup_backups {
 # 传输备份文件到目标服务器
 function transfer_to_server {
     echo "传输启动"
-    read -p  "请输入目标服务器地址（${green}用户名@IP{plain}）: " target_server
-    read -p  "       请输入目标服务器${green}SSH端口号{plain}: " target_port
-    read -p  "     请输入远程服务器的${green}SSH连接密码{plain}: " remote_password
+    read -p  "请输入目标服务器地址（${green}用户名@IP${plain}）: " target_server
+    read -p  "       请输入目标服务器${green}SSH端口号${plain}: " target_port
+    read -p  "     请输入远程服务器的${green}SSH连接密码${plain}: " remote_password
 
     # 使用 sshpass 执行 scp 命令
     echo "查找最新备份文件中，请耐心等待..."
@@ -65,10 +65,10 @@ function transfer_to_server {
     echo "数据传输中，请耐心等待..."
     sshpass -p "$remote_password" scp -P "$target_port" "$latest_backup" "$target_server:$target_path"
     if [ $? -eq 0 ]; then
-        echo "${green}数据传输完成，请检查目标服务器相应路径！{plain}"
+        echo "${green}数据传输完成，请检查目标服务器相应路径！${plain}"
         echo "$(date +'%Y-%m-%d %H:%M:%S') - 传输完成" >> "$logpath"
     else
-        echo "${green}传输失败，请检查输入信息是否正确！{plain}"
+        echo "${green}传输失败，请检查输入信息是否正确！${plain}"
         read -p $'选择操作：\n 0.退出脚本 \n 1.重新进行传输 \n 请输入：[0/1]: ' choice
 
         case "$choice" in
@@ -101,8 +101,8 @@ case "$1" in
         echo "$(date +'%Y-%m-%d %H:%M:%S') - 备份与传输完成">> "$logpath"
         ;;
     *)
-        echo "输入 ->  ${green}sudo $0 [b|t|s]{plain} <- 运行脚本"
-        echo "如 ${green}sudo $0 b{plain} 表示备份文件夹"
+        echo "输入 ->  ${green}sudo $0 [b|t|s]${plain} <- 运行脚本"
+        echo "如 ${green}sudo $0 b${plain} 表示备份文件夹"
         echo "b是备份,t是迁移,s是备份+迁移"
         echo "迁移需要目标服务器：用户名@IP、SSH连接端口号、密码"
         exit 1
