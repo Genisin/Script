@@ -30,17 +30,17 @@ disk_usage=$(df | awk '/\/$/ {printf "% 5.2f", ($3/$2)*100}')
 # 格式化内存和硬盘使用量
 format_memory_usage=""
 format_disk_usage=""
+
 if [ "$used_memory" -lt 1024 ]; then
     format_memory_usage=$(printf "% 5.2f MB" $used_memory)
 else
     format_memory_usage=$(printf "% 5.2f GB" $(echo "scale=2; $used_memory / 1024" | bc))
 fi
 
-if [ "$used_disk" -lt 1 ]; then
-    format_disk_usage=$(printf "% 5.2f MB" $(echo "scale=2; $used_disk * 1024" | bc))
-
+if [ "$used_disk" -lt 1024 ]; then
+    format_disk_usage=$(printf "% 5.2f MB" $used_disk)
 else
-    format_disk_usage=$(printf "% 5.2f GB" $used_disk)
+    format_disk_usage=$(printf "% 5.2f GB" $(echo "scale=2; $used_disk / 1024" | bc))
 fi
 
 # 打印结果
