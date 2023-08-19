@@ -32,7 +32,7 @@ function perform_backup {
     done
 
     # 创建整体备份文件
-    tar -czf "$(dirname "$backup_dir")/$backup_filename" -C "$backup_dir" .
+    tar -czf "$(dirname "$backup_dir")/$backup_filename" -C "$backup_gz" .
 
     # 删除备份文件
     rm -rf "$backup_dir/"
@@ -42,7 +42,6 @@ function perform_backup {
     
     echo "$(date +'%Y-%m-%d %H:%M:%S') - 备份完成">> "$logpath"
 }
-
 
 # 清理多余备份文件
 function cleanup_backups {
