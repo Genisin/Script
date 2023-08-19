@@ -21,16 +21,28 @@ function perform_backup {
     # 删除原备份文件
     rm -rf "$backup_dir/"
 
-    rsync -av --delete "$source_dir/" "$backup_dir/"
+    # 遍历源目录下的子文件夹
+    for subdir in "$source_dir"/*; do
+        if [ -d "$subdir" ]; then
+            subdirname=$(basename "$subdir")
+            backup_subdir="$backup_dir/$subdirname"
+            mkdir -p "$backup_subdir"
+            rsync -av --delete "$subdir/" "$backup_subdir/"
+        fi
+    done
+
+    # 创建整体备份文件
     tar -czf "$(dirname "$backup_dir")/$backup_filename" -C "$backup_dir" .
 
     # 删除备份文件
     rm -rf "$backup_dir/"
+
     # 清理多余备份文件
     cleanup_backups
     
-     echo "$(date +'%Y-%m-%d %H:%M:%S') - 备份完成">> "$logpath"
+    echo "$(date +'%Y-%m-%d %H:%M:%S') - 备份完成">> "$logpath"
 }
+
 
 # 清理多余备份文件
 function cleanup_backups {
