@@ -18,24 +18,17 @@ target_path="/root/data"               #目标服务器存放文件位置（需�
 function perform_backup {
     echo "备份启动"
 
-        # 删除原备份文件
-    rm -rf "$backup_dir/"
+    # 如果 backup_dir 不存在，则创建
+    mkdir -p "$backup_dir"
 
-    # 遍历源目录下的子文件夹
-    for subdir in "$source_dir"/*; do
-        if [ -d "$subdir" ]; then
-            subdirname=$(basename "$subdir")
-            backup_subdir="$backup_gz/$subdirname"   # 修改备份存放路径为 $backup_gz
-            mkdir -p "$backup_subdir"
-            rsync -av --delete "$subdir/" "$backup_subdir/"
-        fi
-    done
+    # 复制 source_dir 到 backup_dir，覆盖已存在的文件
+    rsync -av --delete "$source_dir/" "$backup_dir/"   
 
     # 创建整体备份文件
-    tar -czf "$backup_gz/$backup_filename" -C "$backup_gz" .
+    tar -czf "$backup_gz/$backup_filename" -C "$backup_gz" "$(basename "$backup_dir")"
 
-    # 删除备份文件
-    rm -rf "$backup_dir/"
+    # 删除备份文件夹
+    rm -rf "$backup_dir/" 
 
     # 清理多余备份文件
     cleanup_backups
