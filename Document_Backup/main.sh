@@ -66,6 +66,7 @@ function transfer_to_server {
     echo "数据传输中，请耐心等待..."
     sshpass -p "$remote_password" scp -P "$target_port" "$latest_backup" "$target_server:$target_path"
     if [ $? -eq 0 ]; then
+        echo "数据传输完成，请检查目标服务器相应路径！"
         echo "$(date +'%Y-%m-%d %H:%M:%S') - 传输完成" >> "$logpath"
     else
         echo "传输失败，请检查输入信息是否正确！"
