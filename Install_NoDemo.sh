@@ -18,7 +18,7 @@ mkdir -p /root/data/script
 download_path="/root/data/script"
 
 #下载主脚本到指定文件夹并赋予执行权限
-if sudo wget -L -O "$download_path/$script_name"  "$main_script_url"  &&  sudo chmod +x "$download_path/$script_name" ; then
+if sudo wget -L -O "$download_path/$script_name" "$main_script_url" && sudo chmod +x "$download_path/$script_name"; then
     echo "请输入-> ${green}sudo $download_path/$script_name{plain} <-进行运行"
     rm "$0" # 删除当前脚本
 else
