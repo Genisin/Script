@@ -1,3 +1,4 @@
+#!/bin/bash
 
 ####依次修改：依赖安装脚本的文件原始内容链接 -> 脚本名 -> 主脚本的文件的原始内容链接
 # 替换blob为   -> raw <-
@@ -14,7 +15,7 @@ mkdir -p /root/data/script
 download_path="/root/data/script"
 
 # 定义要安装的依赖名称
-dependencies=("bc" "sshpass")
+dependencies=( "bc" )
 
 # 创建主脚本下载路径
 mkdir -p /root/data/script
