@@ -6,7 +6,7 @@
 # 脚本名字
 script_name="logclean.sh"
 #脚本下载地址 
-main_script_url= "https://github.com/Genisin/script/raw/main/Log_Clean/main.sh"
+main_script_url="https://github.com/Genisin/script/raw/main/Log_Clean/main.sh"
 
 #创建主脚本下载路径
 mkdir -p /root/data/script
@@ -17,6 +17,6 @@ if sudo wget -O "$download_path/$script_name"  "$main_script_url"  &&  sudo chmo
     echo "请输入-> sudo $download_path/$script_name <-进行运行所需脚本"
     rm "$0" # 删除当前脚本
 else
-    echo "下载脚本失败，请再次尝试！（若多次尝试仍无法下载，建议手动下载）!"
+    echo "下载脚本失败，请再次尝试！（若多次尝试仍无法下载，建议手动下载！）"
     rm "$0" # 删除当前脚本
 fi
