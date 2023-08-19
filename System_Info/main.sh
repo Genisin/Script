@@ -31,33 +31,38 @@ disk_usage=$(df | awk '/\/$/ {printf "% 5.2f", ($3/$2)*100}')
 format_memory_usage=""
 format_disk_usage=""
 
-if [ "$used_memory" -lt 1024 ]; then
+if [ $(echo "$used_memory < 1024" | bc) -eq 1 ]; then
     format_memory_usage=$(printf "% 5.2f MB" $used_memory)
 else
     format_memory_usage=$(printf "% 5.2f GB" $(echo "scale=2; $used_memory / 1024" | bc))
 fi
 
-if [ "$used_disk" -lt 1024 ]; then
-    format_disk_usage=$(printf "% 5.2f MB" $used_disk)
+used_disk_f=${used_disk//[^0-9.]/}  # 移除非数字字符
+
+# 将字符串数字转换为浮点数
+used_disk_float=$(echo "$used_disk_f" | bc)
+
+# 使用 bc 进行浮点数比较
+if [ $(echo "$used_disk_float < 1" | bc) -eq 1 ]; then
+    format_disk_usage=$(printf "% 5.2f MB" $(echo "scale=2; $used_disk_float * 1024" | bc))
 else
-    format_disk_usage=$(printf "% 5.2f GB" $(echo "scale=2; $used_disk / 1024" | bc))
+    format_disk_usage=$(printf "% 5.2f GB" $used_disk_float)
 fi
 
-# 打印结果
-echo "硬盘大小：$disk_size"
-echo "内存大小：$memory_size MB"
-echo "系统架构：$system_architecture"
-echo "系统版本：$system_version"
-echo "内核版本：$kernel_version"
-echo "硬盘占用：  $format_disk_usage，占用率：$disk_usage%"
-echo "内存占用：$format_memory_usage，占用率：$memory_usage%"
-echo "CPU型号：$cpu_model @  $cpu_cores 核"
+
+# 打印结果  
+echo "系统架构：        $system_architecture"
+echo "系统版本：        $system_version"
+echo "内核版本：        $kernel_version"
+echo "硬盘占用/硬盘大小：   $format_disk_usage/$disk_size     占用率：$disk_usage%"
+echo "内存占用/内存大小：$format_memory_usage/$memory_size MB    占用率：$memory_usage%"
+echo "CPU型号：         $cpu_model @  $cpu_cores 核"
 # Get IPV4 address if available
 ipv4_address=$(hostname -I | awk '{print $1}')
 if [[ -n "$ipv4_address" && "$ipv4_address" != "127.0.0.1" ]]; then
-    echo "IPv4: $ipv4_address"
+    echo "IPv4:             $ipv4_address"
 else
-    echo "IPv4: 不支持"
+    echo "IPv4:             不支持"
 fi
 # Get IPV6 address if available
 ipv6_enabled=$(cat /proc/sys/net/ipv6/conf/all/disable_ipv6)
@@ -67,10 +72,10 @@ if [[ "$ipv6_enabled" -eq 0 ]]; then
     if [[ -n "$ipv6_addresses" ]]; then
         for ipv6_address in $ipv6_addresses; do
             if [[ "$ipv6_address" != "::1" && "${ipv6_address:0:2}" != "fd" ]]; then
-                echo "IPv6: $ipv6_address"
+                echo "IPv6:             $ipv6_address"
             fi
         done
     fi
 else
-    echo "IPv6: 不支持"   
+    echo "IPv6:             不支持"   
 fi
