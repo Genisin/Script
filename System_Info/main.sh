@@ -52,3 +52,25 @@ echo "内核版本：$kernel_version"
 echo "硬盘占用：  $format_disk_usage，占用率：$disk_usage%"
 echo "内存占用：$format_memory_usage，占用率：$memory_usage%"
 echo "CPU型号：$cpu_model @  $cpu_cores 核"
+# Get IPV4 address if available
+ipv4_address=$(hostname -I | awk '{print $1}')
+if [[ -n "$ipv4_address" && "$ipv4_address" != "127.0.0.1" ]]; then
+    echo "IPv4: $ipv4_address"
+else
+    echo "IPv4: 不支持"
+fi
+# Get IPV6 address if available
+ipv6_enabled=$(cat /proc/sys/net/ipv6/conf/all/disable_ipv6)
+
+if [[ "$ipv6_enabled" -eq 0 ]]; then
+    ipv6_addresses=$(ip -6 addr show | grep "inet6" | grep -v "scope link" | awk '{print $2}' | cut -d'/' -f1)
+    if [[ -n "$ipv6_addresses" ]]; then
+        for ipv6_address in $ipv6_addresses; do
+            if [[ "$ipv6_address" != "::1" && "${ipv6_address:0:2}" != "fd" ]]; then
+                echo "IPv6: $ipv6_address"
+            fi
+        done
+    fi
+else
+    echo "IPv6: 不支持"   
+fi
