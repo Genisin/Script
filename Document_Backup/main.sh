@@ -51,7 +51,7 @@ function transfer_to_server {
 
     # 使用 sshpass 执行 scp 命令
     echo "查找最新备份文件中，请耐心等待..."
-    latest_backup=$(find "$backup_clear" -type f -name 'docker_data_*.tar.gz' -printf '%T@ %p\n' | sort -n | tail -n 1 | awk '{print $2}')
+    latest_backup=$(find "$backup_gz" -type f -name 'docker_data_*.tar.gz' -printf '%T@ %p\n' | sort -n | tail -n 1 | awk '{print $2}')
     echo "数据传输中，请耐心等待..."
     sshpass -p "$remote_password" scp -P "$target_port" "$latest_backup" "$target_server:$target_path"
     if [ $? -eq 0 ]; then
