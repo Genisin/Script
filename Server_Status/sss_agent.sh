@@ -7,10 +7,7 @@
 #   Github: https://github.com/lidalao/ServerStatus
 #========================================================
 
-#修改大佬的脚本，让自己用的舒服一点
-#自定义安装路径 /root/data/docker_data/sss/sss_agent
-#原路径 /opt/sss
-SSS_BASE_PATH="/root/data/docker_data/sss/sss_agent"
+SSS_BASE_PATH="/opt/sss"
 SSS_AGENT_PATH="${SSS_BASE_PATH}/agent"
 SSS_AGENT_SERVICE="/etc/systemd/system/sss-agent.service"
 GITHUB_RAW_URL="https://raw.githubusercontent.com/lidalao/ServerStatus/master"
@@ -155,6 +152,3 @@ if [[ $# == 3 ]]; then
 else
     show_menu
 fi
-
-
-
