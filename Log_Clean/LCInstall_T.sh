@@ -6,7 +6,7 @@
 # 脚本名字
 script_name="logclean.sh"
 #脚本下载地址 
-main_script_url="https://github.com/Genisin/script/raw/main/Log_Clean/main.sh"
+main_script_url="https://raw.githubusercontent.com/Genisin/script/main/Log_Clean/main.sh"
 
 #创建主脚本下载路径
 mkdir -p /root/data/script
