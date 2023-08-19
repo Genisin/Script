@@ -14,6 +14,11 @@ logpath="/var/log/backup.log"     #日志存放文件夹
 #target_port="*** "                     #目标服务器SSH端口号
 target_path="/root/data"               #目标服务器存放文件位置（需要提前建好文件夹）
 
+#字体颜色定义
+orange='\033[33m'
+green='\033[32m'
+plain='\033[0m'
+
 # 备份文件
 function perform_backup {
     echo "备份启动"
@@ -32,7 +37,6 @@ function perform_backup {
 
     # 清理多余备份文件
     cleanup_backups
-    
     echo "$(date +'%Y-%m-%d %H:%M:%S') - 备份完成">> "$logpath"
 }
 
@@ -49,9 +53,9 @@ function cleanup_backups {
 # 传输备份文件到目标服务器
 function transfer_to_server {
     echo "传输启动"
-    read -p "请输入目标服务器地址（例如：root@your.server.com）: " target_server
-    read -p "请输入目标服务器端口号: " target_port
-    read  -p "请输入远程服务器的密码: " remote_password
+    read -p  "请输入目标服务器地址（${green}用户名@IP{plain}）: " target_server
+    read -p  "       请输入目标服务器${green}SSH端口号{plain}: " target_port
+    read -p  "     请输入远程服务器的${green}SSH连接密码{plain}: " remote_password
 
     # 使用 sshpass 执行 scp 命令
     echo "查找最新备份文件中，请耐心等待..."
@@ -85,13 +89,9 @@ function transfer_to_server {
 case "$1" in
     "b")
         perform_backup
-        echo "备份完成"
-        echo "$(date +'%Y-%m-%d %H:%M:%S') - 备份完成">> "$logpath"
         ;;
     "t")
         transfer_to_server
-        echo "传输完成"
-        echo "$(date +'%Y-%m-%d %H:%M:%S') - 传输完成">> "$logpath"
         ;;
     "s")
         perform_backup
@@ -99,11 +99,10 @@ case "$1" in
         echo "$(date +'%Y-%m-%d %H:%M:%S') - 备份与传输完成">> "$logpath"
         ;;
     *)
-        echo "用法: sudo $0 [b|t|s]"
+        echo "输入 ->  ${green}sudo $0 [b|t|s]{plain} <- 运行脚本"
+        echo "如 ${green}sudo $0 b{plain} 表示备份文件夹"
         echo "b是备份,t是迁移,s是备份+迁移"
-        echo "迁移需要目标服务器用户名@IP，端口号和密码"
-        echo "可以手动修改，将目标服务器信息写入脚本，但是出于安全性考虑：不建议！"
-        echo "如sudo $0 b 表示备份文件夹"
+        echo "迁移需要目标服务器：用户名@IP、SSH连接端口号、密码"
         exit 1
         ;;
 esac
