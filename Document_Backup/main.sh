@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # 设置备份和压缩相关的变量
-source_dir="/root/data/docker_data"#需保存文件夹
-backup_dir="/root/data/docker_data_backup"#备份存放文件夹
-backup_gz="/root/data"            #压缩包存放文件夹
-backup_filename="docker_data_$(date +\%Y\%m\%d).tar.gz" #压缩包命名规则
+source_dir="/root/data/docker_data"   # 需保存文件夹
+backup_dir="/root/data/docker_data_backup"   # 备份存放文件夹
+backup_gz="/root/data"   # 压缩包存放文件夹
+backup_filename="docker_data_$(date +\%Y\%m\%d).tar.gz"   # 压缩包命名规则
 max_backups=3                     #压缩包最大备份数量
 logpath="/var/log/backup.log"     #日志存放文件夹
 
@@ -18,21 +18,21 @@ target_path="/root/data"               #目标服务器存放文件位置（需�
 function perform_backup {
     echo "备份启动"
 
-    # 删除原备份文件
+        # 删除原备份文件
     rm -rf "$backup_dir/"
 
     # 遍历源目录下的子文件夹
     for subdir in "$source_dir"/*; do
         if [ -d "$subdir" ]; then
             subdirname=$(basename "$subdir")
-            backup_subdir="$backup_dir/$subdirname"
+            backup_subdir="$backup_gz/$subdirname"   # 修改备份存放路径为 $backup_gz
             mkdir -p "$backup_subdir"
             rsync -av --delete "$subdir/" "$backup_subdir/"
         fi
     done
 
     # 创建整体备份文件
-    tar -czf "$(dirname "$backup_dir")/$backup_filename" -C "$backup_gz" .
+    tar -czf "$backup_gz/$backup_filename" -C "$backup_gz" .
 
     # 删除备份文件
     rm -rf "$backup_dir/"
