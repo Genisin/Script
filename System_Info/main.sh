@@ -54,8 +54,6 @@ fi
 echo "系统架构：        $system_architecture"
 echo "系统版本：        $system_version"
 echo "内核版本：        $kernel_version"
-echo "硬盘占用/硬盘大小：   $format_disk_usage/$disk_size     占用率：$disk_usage%"
-echo "内存占用/内存大小：$format_memory_usage/$memory_size MB    占用率：$memory_usage%"
 echo "CPU型号：         $cpu_model @  $cpu_cores 核"
 # Get IPV4 address if available
 ipv4_address=$(hostname -I | awk '{print $1}')
@@ -79,3 +77,6 @@ if [[ "$ipv6_enabled" -eq 0 ]]; then
 else
     echo "IPv6:             不支持"   
 fi
+
+echo "硬盘占用/硬盘大小：   $format_disk_usage/$disk_size     占用率：$disk_usage%"
+echo "内存占用/内存大小：$format_memory_usage/$memory_size MB    占用率：$memory_usage%"
