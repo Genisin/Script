@@ -51,16 +51,16 @@ fi
 
 
 # 打印结果  
-echo "系统架构：        $system_architecture"
-echo "系统版本：        $system_version"
-echo "内核版本：        $kernel_version"
-echo "CPU型号：         $cpu_model @  $cpu_cores 核"
+echo "系统架构：$system_architecture"
+echo "系统版本：$system_version"
+echo "内核版本：$kernel_version"
+echo "CPU型号： $cpu_model @  $cpu_cores 核"
 # Get IPV4 address if available
 ipv4_address=$(hostname -I | awk '{print $1}')
 if [[ -n "$ipv4_address" && "$ipv4_address" != "127.0.0.1" ]]; then
-    echo "IPv4:             $ipv4_address"
+    echo "IPv4:    $ipv4_address"
 else
-    echo "IPv4:             不支持"
+    echo "IPv4:    不支持"
 fi
 # Get IPV6 address if available
 ipv6_enabled=$(cat /proc/sys/net/ipv6/conf/all/disable_ipv6)
@@ -70,12 +70,12 @@ if [[ "$ipv6_enabled" -eq 0 ]]; then
     if [[ -n "$ipv6_addresses" ]]; then
         for ipv6_address in $ipv6_addresses; do
             if [[ "$ipv6_address" != "::1" && "${ipv6_address:0:2}" != "fd" ]]; then
-                echo "IPv6:             $ipv6_address"
+                echo "IPv6:    $ipv6_address"
             fi
         done
     fi
 else
-    echo "IPv6:             不支持"   
+    echo "IPv6:    不支持"   
 fi
 
 echo "硬盘占用/硬盘大小：   $format_disk_usage/$disk_size     占用率：$disk_usage%"
