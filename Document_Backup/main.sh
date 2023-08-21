@@ -51,16 +51,19 @@ function cleanup_backups {
 
 # 传输备份文件到目标服务器
 function transfer_to_server {
-    echo "传输启动"
-    read -p  "目标服务器地址(用户名@IP): " target_server
-    read -p  "请输入目标服务器SSH端口号: " target_port
-    read -p -s "SSH连接密码（默认为隐藏）: " remote_password
+     echo "传输启动"
+    read -p "目标服务器地址(用户名@IP): " target_server
+    read -p "请输入目标服务器SSH端口号: " target_port
+    read -s -p "SSH连接密码（默认为隐藏）: " remote_password
+    echo    # 打印一个空行
 
     # 使用 sshpass 执行 scp 命令
     echo "查找最新备份文件中，请耐心等待..."
     latest_backup=$(find "$backup_gz" -type f -name 'docker_data_*.tar.gz' -printf '%T@ %p\n' | sort -n | tail -n 1 | awk '{print $2}')
-    echo "数据传输中，请耐心等待..."
+    echo "最新备份文件$latest_backup已找到，数据正在传输，请耐心等待..."
+    # 使用 sshpass 和 scp 传输文件
     sshpass -p "$remote_password" scp -P "$target_port" "$latest_backup" "$target_server:$target_path"
+    
     if [ $? -eq 0 ]; then
         echo "数据传输完成，请检查目标服务器$source_dir同级目录！"
         echo "$(date +'%Y-%m-%d %H:%M:%S') - 传输完成" >> "$logpath"
