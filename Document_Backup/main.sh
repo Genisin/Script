@@ -4,7 +4,7 @@
 source_dir="/root/data/docker_data"   # 需保存文件夹
 backup_dir="/root/data/docker_data_backup"   # 备份存放文件夹
 backup_gz="/root/data/docker_data_backup_gz"   # 压缩包存放文件夹
-backup_filename="docker_data_$(date +\%Y\%m\%d\%H\%M\%S).tar.gz"   # 压缩包命名规则
+backup_filename="docker_data_$(date +\%Y\%m\%d).tar.gz"   # 压缩包命名规则
 max_backups=3                     #压缩包最大备份数量
 logpath="/var/log/backup.log"     #日志存放文件夹
 
@@ -35,7 +35,7 @@ function perform_backup {
     cleanup_backups
     
 
-    echo "数据备份完成，请查看/root/data文件夹"
+    echo "数据备份完成，请查看$backup_gz文件夹"
     echo "$(date +'%Y-%m-%d %H:%M:%S') - 备份完成">> "$logpath"
 }
 
@@ -52,9 +52,9 @@ function cleanup_backups {
 # 传输备份文件到目标服务器
 function transfer_to_server {
     echo "传输启动"
-    read -p  "请输入目标服务器地址（用户名@IP）: " target_server
-    read -p  "       请输入目标服务器SSH端口号: " target_port
-    read -p  "     请输入远程服务器的SSH连接密码: " remote_password
+    read -p  "目标服务器地址(用户名@IP): " target_server
+    read -p  "请输入目标服务器SSH端口号: " target_port
+    read -p -s "SSH连接密码（默认为隐藏）: " remote_password
 
     # 使用 sshpass 执行 scp 命令
     echo "查找最新备份文件中，请耐心等待..."
@@ -62,7 +62,7 @@ function transfer_to_server {
     echo "数据传输中，请耐心等待..."
     sshpass -p "$remote_password" scp -P "$target_port" "$latest_backup" "$target_server:$target_path"
     if [ $? -eq 0 ]; then
-        echo "数据传输完成，请检查目标服务器相应路径！"
+        echo "数据传输完成，请检查目标服务器$source_dir同级目录！"
         echo "$(date +'%Y-%m-%d %H:%M:%S') - 传输完成" >> "$logpath"
     else
         echo "传输失败，请检查输入信息是否正确！"
