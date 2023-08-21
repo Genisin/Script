@@ -3,8 +3,8 @@
 # 设置备份和压缩相关的变量
 source_dir="/root/data/docker_data"   # 需保存文件夹
 backup_dir="/root/data/docker_data_backup"   # 备份存放文件夹
-backup_gz="/root/data"   # 压缩包存放文件夹
-backup_filename="docker_data_$(date +\%Y\%m\%d).tar.gz"   # 压缩包命名规则
+backup_gz="/root/data/docker_data_backup_gz"   # 压缩包存放文件夹
+backup_filename="docker_data_$(date +\%Y\%m\%d\%H\%M\%S).tar.gz"   # 压缩包命名规则
 max_backups=3                     #压缩包最大备份数量
 logpath="/var/log/backup.log"     #日志存放文件夹
 
@@ -18,20 +18,22 @@ target_path="/root/data"               #目标服务器存放文件位置（需�
 function perform_backup {
     echo "备份启动"
 
-    # 如果 backup_dir 不存在，则创建
+   # 如果 backup_dir 不存在，则创建
     mkdir -p "$backup_dir"
 
     # 复制 source_dir 到 backup_dir，覆盖已存在的文件
     rsync -av --delete "$source_dir/" "$backup_dir/"   
 
-    # 创建整体备份文件
-    tar -czf "$backup_gz/$backup_filename" -C "$backup_gz" "$(basename "$backup_dir")"
+    # 创建压缩包
+    mkdir -p "$backup_gz"
+    tar -czf "$backup_gz/$backup_filename" -C "$backup_dir" .
 
     # 删除备份文件夹
-    rm -rf "$backup_dir/" 
+    rm -rf "$backup_dir/"
 
     # 清理多余备份文件
     cleanup_backups
+    
 
     echo "数据备份完成，请查看/root/data文件夹"
     echo "$(date +'%Y-%m-%d %H:%M:%S') - 备份完成">> "$logpath"
@@ -51,8 +53,8 @@ function cleanup_backups {
 function transfer_to_server {
     echo "传输启动"
     read -p  "请输入目标服务器地址（用户名@IP）: " target_server
-    read -p  "        请输入目标服务器SSH端口号: " target_port
-    read -p  "    请输入远程服务器的SSH连接密码: " remote_password
+    read -p  "       请输入目标服务器SSH端口号: " target_port
+    read -p  "     请输入远程服务器的SSH连接密码: " remote_password
 
     # 使用 sshpass 执行 scp 命令
     echo "查找最新备份文件中，请耐心等待..."
