@@ -68,7 +68,7 @@ function transfer_to_server {
 
     
     if [ $? -eq 0 ]; then
-        echo "数据传输完成，请检查目标服务器$source_dir同级目录！"
+        echo "数据传输完成，文件存放于目标服务器$target_path 下！"
         echo "$(date +'%Y-%m-%d %H:%M:%S') - 传输完成" >> "$logpath"
     else
         echo "传输失败，请检查输入信息是否正确！"
