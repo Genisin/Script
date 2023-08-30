@@ -55,7 +55,7 @@ function transfer_to_server {
     # 使用 sshpass 执行 scp 命令
     echo "查找最新备份文件中，请耐心等待..."
     latest_backup=$(find "$backup_gz" -type f -name 'docker_data_*.tar.gz' -printf '%T@ %p\n' | sort -n | tail -n 1 | awk '{print $2}')
-    echo "最新备份文件$latest_backup已找到"
+    echo "最新备份文件 $latest_backup 已找到，大小：$(du -m "$latest_backup" | cut -f1) MB"
     echo "-----------请输入目标服务器信息---------------"
     read -p "目标服务器地址(用户名@IP): " target_server
     read -p "请输入目标服务器SSH端口号: " target_port
