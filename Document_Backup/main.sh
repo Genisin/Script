@@ -12,7 +12,7 @@ logpath="/var/log/backup.log"     #日志存放文件夹
 # 设置目标服务器接受文件路径
 #target_server=" root@your.server.com " #目标服务器地址
 #target_port="*** "                     #目标服务器SSH端口号
-target_path="/root/data"               #目标服务器存放文件位置（需要提前建好文件夹）
+target_path="/root/data/docker_data_backup_gz" #目标服务器存放文件位置（需要提前建好文件夹）
 
 # 备份文件
 function perform_backup {
