@@ -63,7 +63,9 @@ function transfer_to_server {
     echo
     echo "正在向 "$target_server" 传输文件，请稍等...." 
     # 使用 sshpass 和 scp 传输文件
+    sshpass -p "$remote_password" ssh -p "$target_port" "$target_server" "mkdir -p $target_path && exit"
     sshpass -p "$remote_password" scp -P "$target_port" "$latest_backup" "$target_server:$target_path"
+
     
     if [ $? -eq 0 ]; then
         echo "数据传输完成，请检查目标服务器$source_dir同级目录！"
