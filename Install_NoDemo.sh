@@ -6,7 +6,7 @@
 # 脚本名字
 script_name="脚本名.sh"
 #脚本下载地址 
-main_script_url= "主脚本的文件的原始内容链接"
+main_script_url="主脚本的文件的原始内容链接"
 
 #字体颜色定义
 orange='\033[33m'
