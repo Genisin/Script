@@ -18,10 +18,10 @@ mkdir -p /root/data/script
 download_path="/root/data/script"
 
 #下载主脚本到指定文件夹并赋予执行权限
-if sudo wget -L -O "$download_path/$script_name" "$main_script_url" && sudo chmod +x "$download_path/$script_name"; then
-    echo "请输入-> ${green}sudo $download_path/$script_name{plain} <-进行运行"
+if sudo wget -O "$download_path/$script_name"  "$main_script_url"  &&  sudo chmod +x "$download_path/$script_name" ; then
+    echo "请输入-> sudo $download_path/$script_name <-进行运行所需脚本"
     rm "$0" # 删除当前脚本
 else
-    echo "下载脚本失败，请再次尝试！（若多次尝试仍无法下载，建议手动下载）!"
+    echo "下载脚本失败，请再次尝试！（若多次尝试仍无法下载，建议手动下载！）"
     rm "$0" # 删除当前脚本
 fi
