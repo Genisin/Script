@@ -6,7 +6,7 @@
 # 脚本名字
 script_name="UFW-Docker.sh"
 #脚本下载地址 
-main_script_url= "https://raw.githubusercontent.com/chaifeng/ufw-docker/master/ufw-docker"
+main_script_url="https://raw.githubusercontent.com/chaifeng/ufw-docker/master/ufw-docker"
 
 #字体颜色定义
 orange='\033[33m'
