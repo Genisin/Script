@@ -28,9 +28,27 @@
     },
     {
       "tag": "ipv6",
-      "sendThrough": "ipv6 adress",
+      "sendThrough": "ipv6 adress,
       "protocol": "freedom",
       "settings": {}
+    },
+{
+      "tag": "isp",
+      "protocol": "socks",
+      "settings": {
+        "servers": [
+          {
+            "address": "isp adress",
+            "port": 端口号,
+            "users": [
+              {
+                "user": "user name",
+                "pass": "passward"
+              }
+            ]
+          }
+        ]
+      }
     },
 
     {
@@ -85,15 +103,29 @@
       },
 
       {
-        "domain": ["使用IPV4的域名"],
+        "domain": ["ip125.com"],
         "outboundTag": "ipv4",
         "type": "field"
       },
       {
-        "domain": ["使用IPV6的域名"],
+        "domain": ["scholar.google.com"],
         "outboundTag": "ipv6",
         "type": "field"
-      }
+      },
+ {
+        "type": "field",
+        "outboundTag": "isp",
+        "domain": [
+          "ip125.com",
+          "geosite:openai",
+          "geosite:netflix",
+          "geosite:facebook",
+          "geosite:paypal",
+          "geosite:twitter",
+          "geosite:amazon",
+          "geosite:disney"
+        ]
+      },
 
     ]
   },
