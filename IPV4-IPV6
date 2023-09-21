@@ -103,12 +103,18 @@
       },
 
       {
-        "domain": ["ip125.com"],
+        "domain": [
+          "domain name",
+          "geosite:*"
+        ],
         "outboundTag": "ipv4",
         "type": "field"
       },
       {
-        "domain": ["scholar.google.com"],
+        "domain": [
+          "domain name",
+          "geosite:*"
+        ],
         "outboundTag": "ipv6",
         "type": "field"
       },
@@ -116,14 +122,8 @@
         "type": "field",
         "outboundTag": "isp",
         "domain": [
-          "ip125.com",
-          "geosite:openai",
-          "geosite:netflix",
-          "geosite:facebook",
-          "geosite:paypal",
-          "geosite:twitter",
-          "geosite:amazon",
-          "geosite:disney"
+          "domain name",
+          "geosite:*"
         ]
       },
 
