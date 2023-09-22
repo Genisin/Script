@@ -22,15 +22,33 @@
 
    {
       "tag": "ipv4",
-      "sendThrough": "ipv4 adress",
+      "sendThrough": "ipv4 address",
       "protocol": "freedom",
       "settings": {}
     },
     {
       "tag": "ipv6",
-      "sendThrough": "ipv6 adress",
+      "sendThrough": "ipv6 address,
       "protocol": "freedom",
       "settings": {}
+    },
+    {
+      "tag": "isp",
+      "protocol": "socks",
+      "settings": {
+        "servers": [
+          {
+            "address": "isp address",
+            "port": 端口号,
+            "users": [
+              {
+                "user": "user name",
+                "pass": "passward"
+              }
+           ]
+          }
+        ]
+       }
     },
 
     {
@@ -85,15 +103,29 @@
       },
 
       {
-        "domain": ["使用IPV4的域名"],
+        "domain": [
+          "domain name",
+          "geosite:*"
+        ],
         "outboundTag": "ipv4",
         "type": "field"
       },
       {
-        "domain": ["使用IPV6的域名"],
+        "domain": [
+          "domain name",
+          "geosite:*"
+        ],
         "outboundTag": "ipv6",
         "type": "field"
-      }
+      },
+ {
+        "type": "field",
+        "outboundTag": "isp",
+        "domain": [
+          "domain name",
+          "geosite:*"
+        ]
+      },
 
     ]
   },
