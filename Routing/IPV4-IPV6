@@ -1,0 +1,107 @@
+{
+  "api": {
+    "services": [
+      "HandlerService",
+      "LoggerService",
+      "StatsService"
+    ],
+    "tag": "api"
+  },
+  "inbounds": [
+    {
+      "listen": "127.0.0.1",
+      "port": 62789,
+      "protocol": "dokodemo-door",
+      "settings": {
+        "address": "127.0.0.1"
+      },
+      "tag": "api"
+    }
+  ],
+  "outbounds": [
+
+   {
+      "tag": "ipv4",
+      "sendThrough": "ipv4 address",
+      "protocol": "freedom",
+      "settings": {}
+    },
+    {
+      "tag": "ipv6",
+      "sendThrough": "ipv6 address",
+      "protocol": "freedom",
+      "settings": {}
+    },
+
+    {
+      "protocol": "freedom",
+      "settings": {}
+    },
+    {
+      "protocol": "blackhole",
+      "settings": {},
+      "tag": "blocked"
+    }
+  ],
+  "policy": {
+    "levels": {
+      "0": {
+        "handshake": 10,
+        "connIdle": 100,
+        "uplinkOnly": 2,
+        "downlinkOnly": 3,
+        "statsUserUplink": true,
+        "statsUserDownlink": true,
+        "bufferSize": 10240
+      }
+    },
+    "system": {
+      "statsInboundDownlink": true,
+      "statsInboundUplink": true
+    }
+  },
+  "routing": {
+    "rules": [
+      {
+        "inboundTag": [
+          "api"
+        ],
+        "outboundTag": "api",
+        "type": "field"
+      },
+      {
+        "ip": [
+          "geoip:private"
+        ],
+        "outboundTag": "blocked",
+        "type": "field"
+      },
+      {
+        "outboundTag": "blocked",
+        "protocol": [
+          "bittorrent"
+        ],
+        "type": "field"
+      },
+
+      {
+        "domain": [
+          "domain name",
+          "geosite:*"
+        ],
+        "outboundTag": "ipv4",
+        "type": "field"
+      },
+      {
+        "domain": [
+          "domain name",
+          "geosite:*"
+        ],
+        "outboundTag": "ipv6",
+        "type": "field"
+      }
+
+    ]
+  },
+  "stats": {}
+}

@@ -19,38 +19,6 @@
     }
   ],
   "outbounds": [
-
-   {
-      "tag": "ipv4",
-      "sendThrough": "ipv4 address",
-      "protocol": "freedom",
-      "settings": {}
-    },
-    {
-      "tag": "ipv6",
-      "sendThrough": "ipv6 address,
-      "protocol": "freedom",
-      "settings": {}
-    },
-    {
-      "tag": "isp",
-      "protocol": "socks",
-      "settings": {
-        "servers": [
-          {
-            "address": "isp address",
-            "port": 端口号,
-            "users": [
-              {
-                "user": "user name",
-                "pass": "passward"
-              }
-           ]
-          }
-        ]
-       }
-    },
-
     {
       "protocol": "freedom",
       "settings": {}
@@ -100,33 +68,7 @@
           "bittorrent"
         ],
         "type": "field"
-      },
-
-      {
-        "domain": [
-          "domain name",
-          "geosite:*"
-        ],
-        "outboundTag": "ipv4",
-        "type": "field"
-      },
-      {
-        "domain": [
-          "domain name",
-          "geosite:*"
-        ],
-        "outboundTag": "ipv6",
-        "type": "field"
-      },
- {
-        "type": "field",
-        "outboundTag": "isp",
-        "domain": [
-          "domain name",
-          "geosite:*"
-        ]
-      },
-
+      }
     ]
   },
   "stats": {}
