@@ -59,6 +59,11 @@
         "bufferSize": 10240
       }
     },
+    "system": {
+      "statsInboundDownlink": true,
+      "statsInboundUplink": true
+    }
+  },
   "routing": {
     "rules": [
       {
