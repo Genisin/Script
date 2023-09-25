@@ -55,28 +55,30 @@ echo "系统架构：$system_architecture"
 echo "系统版本：$system_version"
 echo "内核版本：$kernel_version"
 echo "CPU型号： $cpu_model @  $cpu_cores 核"
-# Get IPV4 address if available
-ipv4_address=$(hostname -I | awk '{print $1}')
+
+# 使用curl和ipinfo.io查询IP信息
+ip_info=$(curl -s ipinfo.io)
+
+# 从查询结果中提取IP地址和IP类型
+ipv4_address=$(echo "$ip_info" | jq -r '.ip')
+ip_country=$(echo "$ip_info" | jq -r '.country')
+ip_city=$(echo "$ip_info" | jq -r '.city')
+
 if [[ -n "$ipv4_address" && "$ipv4_address" != "127.0.0.1" ]]; then
-    echo "IPv4:     $ipv4_address"
+    echo "IPv4:     $ipv4_address from $ip_country / $ip_city"
 else
     echo "IPv4:     不支持"
 fi
-# Get IPV6 address if available
-ipv6_enabled=$(cat /proc/sys/net/ipv6/conf/all/disable_ipv6)
 
-if [[ "$ipv6_enabled" -eq 0 ]]; then
-    ipv6_addresses=$(ip -6 addr show | grep "inet6" | grep -v "scope link" | awk '{print $2}' | cut -d'/' -f1)
-    if [[ -n "$ipv6_addresses" ]]; then
-        for ipv6_address in $ipv6_addresses; do
-            if [[ "$ipv6_address" != "::1" && "${ipv6_address:0:2}" != "fd" ]]; then
-                echo "IPv6:     $ipv6_address"
-            fi
-        done
-    fi
+ipv6_address=$(curl -s 6.ipw.cn)
+if [ -n "$ipv6_address" ]; then
+  echo "IPv6:     $ipv6_address"
 else
-    echo "IPv6:     不支持"   
+  echo "IPv6:     不支持"
 fi
+
+ip_address=$(curl -s test.ipw.cn)
+echo   "优先级IP: $ip_address"
 
 echo "硬盘占用/硬盘大小：   $format_disk_usage/$disk_size     占用率：$disk_usage%"
 echo "内存占用/内存大小：$format_memory_usage/$memory_size MB    占用率：$memory_usage%"
