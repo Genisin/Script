@@ -70,7 +70,7 @@ else
     echo "IPv4:     不支持"
 fi
 
-ipv6_address=$(curl -s 6.ipw.cn)
+ipv6_address=$(curl -s ifconfig.co)
 if [ -n "$ipv6_address" ]; then
   echo "IPv6:     $ipv6_address"
 else

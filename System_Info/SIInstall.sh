@@ -15,7 +15,7 @@ mkdir -p /root/data/script
 download_path="/root/data/script"
 
 # 定义要安装的依赖名称
-dependencies=( "bc" )
+dependencies=( "bc" "jq" )
 
 # 创建主脚本下载路径
 mkdir -p /root/data/script
