@@ -1,7 +1,5 @@
 # 文件备份脚本
 ---
-## 使用说明
-
 ## 安装方法
 ```
 sudo wget -L -O Dyinstall.sh https://raw.githubusercontent.com/Genisin/script/main/Document_Backup/DBInstall.sh && chmod +x Dyinstall.sh && sudo ./Dyinstall.sh
@@ -10,6 +8,8 @@ sudo wget -L -O Dyinstall.sh https://raw.githubusercontent.com/Genisin/script/ma
 * 安装脚本直接下载到当前目录下，但无需担心，运行过后直接自动清除
 * 备份脚本会默认下载到/root/data/script路径下
 ---
+## 使用说明
+
 ### 运行说明
 ```
 sudo /root/data/script/Document_Backup.sh <choice>
@@ -36,9 +36,7 @@ crontab -e    #打开系统的定时任务列表
 ### 存储位置说明 
 1. 备份位置：/root/data/docker_data_backup_gz
 2. 迁移至目标服务器位置：/root/data/docker_data_backup_gz
-
 ---
-
 ## 删除
 只需运行以下命令即可：
 ```
