@@ -11,7 +11,8 @@ max_log_size=100   # 100Kb
 logpath="/var/log/logclean.log"
 
 # 更新软件包并清理多余软件包
-if apt update -y && apt full-upgrade -y && sudo apt dist-upgrade && apt autoremove -y && apt autoclean -y; then
+echo "正在更新软件包并清理多余软件包，之后将清理日志....."
+if { apt update -y && apt full-upgrade -y && sudo apt dist-upgrade && apt autoremove -y && apt autoclean -y; } > /dev/null 2>&1; then
     echo "$(date +'%Y-%m-%d %H:%M:%S') - 已更新软件包并清理多余软件包" >> "$logpath"
 else
     echo "$(date +'%Y-%m-%d %H:%M:%S') - 软件包更新和清理失败" >> "$logpath"
