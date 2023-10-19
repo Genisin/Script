@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#修改完成后赋值此段代码进行运行
+#   sudo wget -L -O Dyinstall.sh https://raw.githubusercontent.com/Genisin/Script/main/Document_Backup/DBInstall.sh && chmod +x Dyinstall.sh && sudo ./Dyinstall.sh
+
 # 脚本名字
 script_name="Document_Backup.sh"
 # 脚本下载地址 

@@ -1,7 +1,7 @@
 ####依次修改：依赖安装脚本的文件原始内容链接 -> 脚本名 -> 主脚本的文件的原始内容链接
 # 替换blob为   -> raw <-
 #修改完成后赋值此段代码进行运行
-#    sudo wget -O Dyinstall.sh https://github.com/Genisin/script/raw/main/Log_Clean/LCInstall_T.sh && chmod +x Dyinstall.sh && sudo ./Dyinstall.sh
+#    sudo wget -O Dyinstall.sh https://raw.githubusercontent.com/Genisin/script/main/Log_Clean/LCInstall_T.sh && chmod +x Dyinstall.sh && sudo ./Dyinstall.sh
  
 # 脚本名字
 script_name="logclean.sh"
