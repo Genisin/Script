@@ -65,12 +65,14 @@ else
     echo "IPv4:     不支持"
 fi
 
-ipv6_address=$(curl -s 6.ipw.cn)
+ipv6_address=$(curl -s https://ipv6.icanhazip.com)
+
 if [ -n "$ipv6_address" ]; then
-  echo "IPv6:     $ipv6_address"
+    echo "IPv6:     $ipv6_address"
 else
-  echo "IPv6:     不支持"
+    echo "IPv6:     不支持"
 fi
+
 
 ip_address=$(curl -s test.ipw.cn)
 echo   "优先级IP: $ip_address"
