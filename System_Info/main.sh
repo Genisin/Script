@@ -59,10 +59,10 @@ echo "CPU型号： $cpu_model @  $cpu_cores 核"
 # 使用curl和ipinfo.io查询IP信息
 ip_info=$(curl -s ipinfo.io)
 
+ipv4_address=$(echo "$ip_info" | jq -r '.ip')
 
 if [[ -n "$ipv4_address" && "$ipv4_address" != "127.0.0.1" ]]; then
     # 从查询结果中提取IP地址和IP类型
-    ipv4_address=$(echo "$ip_info" | jq -r '.ip')
     ip_country=$(echo "$ip_info" | jq -r '.country')
     ip_city=$(echo "$ip_info" | jq -r '.city')
     echo "IPv4:     $ipv4_address from $ip_country / $ip_city"
