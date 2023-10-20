@@ -1,15 +1,12 @@
-#!/bin/bash
-
-####依次修改：依赖安装脚本的文件原始内容链接 -> 脚本名 -> 主脚本的文件的原始内容链接 -> 添加依赖
+####依次修改：依赖安装脚本的文件原始内容链接 -> 脚本名 -> 主脚本的文件的原始内容链接
+# 替换为   -> raw.githubusercontent.com <- 
 #修改完成后赋值此段代码进行运行
-
-# 此链接为脚本安装链接
-#    sudo wget -O Dyinstall.sh https://raw.githubusercontent.com/Genisin/script/main/文件夹/安装脚本名.sh && chmod +x Dyinstall.sh && sudo ./Dyinstall.sh
-
+#    sudo wget -O Dyinstall.sh https://raw.githubusercontent.com/Genisin/script/main/DockerUpdate/DUInstall.sh && chmod +x Dyinstall.sh && sudo ./Dyinstall.sh
+ 
 # 脚本名字
-script_name="脚本名.sh"
-# 此链接为主脚本下载地址 
-main_script_url="https://raw.githubusercontent.com/Genisin/script/main/文件夹名/main.sh"
+script_name="DockerUpdate.sh"
+#脚本下载地址 
+main_script_url="https://raw.githubusercontent.com/Genisin/script/main/DockerUpdate/main.sh"
 
 #字体颜色定义
 orange='\033[33m'

@@ -1,14 +1,15 @@
 #!/bin/bash
 
 ####依次修改：依赖安装脚本的文件原始内容链接 -> 脚本名 -> 主脚本的文件的原始内容链接 -> 添加依赖
-# 替换blob为   -> raw.githubusercontent.com <-
 #修改完成后赋值此段代码进行运行
-#    sudo wget -L -O Dyinstall.sh 依赖安装脚本的文件原始内容链接 && chmod +x Dyinstall.sh && sudo ./Dyinstall.sh
- 
+
+# 此链接为脚本安装链接
+#    sudo wget -O Dyinstall.sh https://raw.githubusercontent.com/Genisin/script/main/文件夹/安装脚本名.sh && chmod +x Dyinstall.sh && sudo ./Dyinstall.sh
+
 # 脚本名字
 script_name="脚本名.sh"
-# 脚本下载地址 
-main_script_url="主脚本的文件的原始内容链接"
+# 此链接为主脚本下载地址 
+main_script_url="https://raw.githubusercontent.com/Genisin/script/main/文件夹名/main.sh"
 
 # 定义要安装的依赖名称
 dependencies=("依赖1" "依赖2")
