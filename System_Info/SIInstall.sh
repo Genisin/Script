@@ -17,6 +17,11 @@ download_path="/root/data/script"
 # 定义要安装的依赖名称
 dependencies=( "bc" )
 
+#字体颜色定义
+orange='\033[33m'
+green='\033[32m'
+plain='\033[0m'
+
 # 创建主脚本下载路径
 mkdir -p /root/data/script
 download_path="/root/data/script"
@@ -77,7 +82,7 @@ if sudo wget -L -O "$download_path/$script_name" "$main_script_url" && sudo chmo
     echo "发现已有依赖：${existing_deps[*]}"
     echo "现已具备依赖：${dependencies[*]}"
     echo "已具备运行脚本的所有依赖，此脚本任务结束，即将自动删除"
-    echo "请输入-> sudo $download_path/$script_name <-进行运行"
+    echo "请输入-> ${green}sudo $download_path/$script_name${plain} <-进行运行"
     rm "$0" # 删除当前脚本
 else
     echo "发现已有依赖：${existing_deps[*]}"
