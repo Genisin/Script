@@ -11,11 +11,6 @@ main_script_url="https://raw.githubusercontent.com/Genisin/script/main/Document_
 # 定义要安装的依赖名称
 dependencies=("rsync" "sshpass")
 
-#字体颜色定义
-orange='\033[33m'
-green='\033[32m'
-plain='\033[0m'
-
 # 创建主脚本下载路径
 mkdir -p /root/data/script
 download_path="/root/data/script"
@@ -70,8 +65,14 @@ else
 fi
 
 echo "依赖安装完成，开始下载脚本..."
+
+#字体颜色定义
+orange='\033[33m'
+green='\033[32m'
+plain='\033[0m'
+
 # 下载主脚本到指定文件夹并赋予执行权限
-if sudo -E wget -L -O "$download_path/$script_name" "$main_script_url" && sudo chmod +x "$download_path/$script_name"; then
+if sudo wget -L -O "$download_path/$script_name" "$main_script_url" && sudo chmod +x "$download_path/$script_name"; then
     echo "发现已有依赖：${existing_deps[*]}"
     echo "现已具备依赖：${dependencies[*]}"
     echo "已具备运行脚本的所有依赖，此脚本任务结束，即将自动删除"
