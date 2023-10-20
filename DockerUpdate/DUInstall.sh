@@ -22,6 +22,6 @@ if sudo wget -L -O "$download_path/$script_name" "$main_script_url" && sudo chmo
     echo "请输入-> ${green}sudo $download_path/$script_name${plain} <-进行运行"
     rm "$0" # 删除当前脚本
 else
-    echo "下载脚本失败，请再次尝试！（若多次尝试仍无法下载，建议手动下载）!"
+    echo -e "下载脚本失败，请再次尝试！（若多次尝试仍无法下载，建议手动下载）!"
     rm "$0" # 删除当前脚本
 fi
