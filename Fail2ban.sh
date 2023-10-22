@@ -17,7 +17,13 @@ systemctl enable fail2ban || exit_with_error "启用 fail2ban 失败"
 # 创建自定义jail配置
 cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local || exit_with_error "创建 jail.local 失败"
 rm -rf /etc/fail2ban/jail.d/* || exit_with_error "移除 jail.d 内容失败"
-echo -e "[sshd]\nenabled = true\nmode = normal\nbackend = systemd" | sudo tee -a /etc/fail2ban/jail.d/sshd.local || exit_with_error "创建 sshd.local 失败"
+
+# 创建自定义jail配置
+JAIL_FILE="/etc/fail2ban/jail.d/sshd.local"
+if [ -e "$JAIL_FILE" ]; then
+    rm -f "$JAIL_FILE" || exit_with_error "删除现有文件失败"
+fi
+echo -e "[sshd]\nenabled = true\nmode = normal\nbackend = systemd" | sudo tee -a "$JAIL_FILE" || exit_with_error "创建 sshd.local 失败"
 
 # 重启fail2ban
 systemctl restart fail2ban || exit_with_error "重启 fail2ban 失败"
