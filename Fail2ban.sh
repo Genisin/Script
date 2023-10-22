@@ -25,8 +25,8 @@ if [ -e "$JAIL_FILE" ]; then
 fi
 echo -e "[sshd]\nenabled = true\nmode = normal\nbackend = systemd" | sudo tee -a "$JAIL_FILE" || exit_with_error "创建 sshd.local 失败"
 
+echo "Fail2ban 安装和配置成功完成，脚本正在删除..."
+
 # 重启fail2ban
 systemctl restart fail2ban || exit_with_error "重启 fail2ban 失败"
-
-echo "Fail2ban 安装和配置成功完成，脚本正在删除..."
 rm "$0"
