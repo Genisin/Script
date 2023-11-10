@@ -1,0 +1,5 @@
+sudo iptables -A INPUT -i docker0 -j ACCEPT;
+sudo iptables -A FORWARD -i docker0 -j ACCEPT
+# 重启生效
+sudo mkdir -p /etc/iptables/
+sudo iptables-save > /etc/iptables/rules.v4
