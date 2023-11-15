@@ -1,8 +1,5 @@
-####依次修改：依赖安装脚本的文件原始内容链接 -> 脚本名 -> 主脚本的文件的原始内容链接
-# 替换为   -> raw.githubusercontent.com <- 
-#修改完成后赋值此段代码进行运行
-#    sudo wget -O Dyinstall.sh https://raw.githubusercontent.com/Genisin/script/main/DockerUpdate/DUInstall.sh && chmod +x Dyinstall.sh && sudo ./Dyinstall.sh
- 
+#!/bin/bash
+
 # 脚本名字
 script_name="DockerUpdate.sh"
 #脚本下载地址 
