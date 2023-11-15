@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#    sudo wget -O Dyinstall.sh https://raw.githubusercontent.com/Genisin/script/main/文件夹/安装脚本名.sh && chmod +x Dyinstall.sh && sudo ./Dyinstall.sh
-
 # 脚本名字
 script_name="脚本名.sh"
 # 此链接为主脚本下载地址 
@@ -13,6 +11,11 @@ dependencies=("依赖1" "依赖2")
 # 创建主脚本下载路径
 mkdir -p /root/data/script
 download_path="/root/data/script"
+
+#字体颜色定义
+orange='\033[33m'
+green='\033[32m'
+plain='\033[0m'
 
 echo "检查依赖..."
 # 检查依赖是否已经安装
@@ -54,8 +57,7 @@ else
                 # Arch Linux
                 pacman -S --noconfirm "$dep"
             else
-                echo "抱歉，无法为该系统安装依赖"
-                echo "为不占用系统空间，将自动删除脚本！"
+                echo "无法为该系统安装依赖，为不占用系统空间，将自动删除脚本！"
                 rm "$0" # 删除当前脚本
                 exit 1
             fi
@@ -66,14 +68,14 @@ fi
 echo "依赖安装完成，开始下载脚本..."
 # 下载主脚本到指定文件夹并赋予执行权限
 if sudo wget -L -O "$download_path/$script_name" "$main_script_url" && sudo chmod +x "$download_path/$script_name"; then
-    echo "发现已有依赖：${existing_deps[*]}"
-    echo "现已具备依赖：${dependencies[*]}"
-    echo "已具备运行脚本的所有依赖，此脚本任务结束，即将自动删除"
-    echo "请输入-> sudo $download_path/$script_name <-进行运行"
+    echo -e "发现已有依赖：${existing_deps[*]}"
+    echo -e "现已具备依赖：${dependencies[*]}"
+    echo -e "已具备运行脚本的所有依赖，此脚本任务结束，即将自动删除"
+    echo -e "请输入-> ${green}sudo $download_path/$script_name${plain} <-进行运行"
     rm "$0" # 删除当前脚本
 else
-    echo "发现已有依赖：${existing_deps[*]}"
-    echo "现已具备依赖：${dependencies[*]}"
-    echo "下载脚本失败，请再次尝试！（若多次尝试仍无法下载，建议手动下载）!"
+    echo -e "发现已有依赖：${existing_deps[*]}"
+    echo -e "现已具备依赖：${dependencies[*]}"
+    echo -e "${orange}下载脚本失败，请再次尝试！${plain}"
     rm "$0" # 删除当前脚本
 fi

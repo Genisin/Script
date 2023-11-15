@@ -12,7 +12,7 @@ dependencies=("rsync" "sshpass")
 mkdir -p /root/data/script
 download_path="/root/data/script"
 
-echo "检查依赖..."
+echo -e "检查依赖..."
 # 检查依赖是否已经安装
 check_dependencies() {
     local missing_deps=()
@@ -28,18 +28,18 @@ check_dependencies() {
     if [ ${#missing_deps[@]} -eq 0 ]; then
         return 0  # 返回0表示所有依赖已经安装
     else
-        echo "以下依赖未安装："
+        echo -e "以下依赖未安装："
         for missing_dep in "${missing_deps[@]}"; do
-            echo "$missing_dep"
+            echo -e "$missing_dep"
         done
         return 1  # 返回1表示存在未安装的依赖
     fi
 }
 
 if check_dependencies; then
-    echo "所有依赖已经安装，无需操作。"
+    echo -e "所有依赖已经安装，无需操作。"
 else
-    echo "安装依赖中..."
+    echo -e "安装依赖中..."
     for dep in "${dependencies[@]}"; do
         if ! command -v "$dep" >/dev/null 2>&1; then
             if command -v apt-get >/dev/null 2>&1; then
@@ -52,8 +52,8 @@ else
                 # Arch Linux
                 pacman -S --noconfirm "$dep"
             else
-                echo "抱歉，无法为该系统无法安装依赖"
-                echo "为不占用您的系统空间，将自动删除脚本！"
+                echo -e "抱歉，无法为该系统无法安装依赖"
+                echo -e "为不占用您的系统空间，将自动删除脚本！"
                 rm "$0" # 删除当前脚本
                 exit 1
             fi
@@ -61,18 +61,18 @@ else
     done
 fi
 
-echo "依赖安装完成，开始下载脚本..."
+echo -e "依赖安装完成，开始下载脚本..."
 
 # 下载主脚本到指定文件夹并赋予执行权限
 if sudo wget -L -O "$download_path/$script_name" "$main_script_url" && sudo chmod +x "$download_path/$script_name"; then
-    echo "发现已有依赖：${existing_deps[*]}"
-    echo "现已具备依赖：${dependencies[*]}"
-    echo "已具备运行脚本的所有依赖，此脚本任务结束，即将自动删除"
-    echo "请输入-> sudo $download_path/$script_name <-进行运行"
+    echo -e "发现已有依赖：${existing_deps[*]}"
+    echo -e "现已具备依赖：${dependencies[*]}"
+    echo -e "已具备运行脚本的所有依赖，此脚本任务结束，即将自动删除"
+    echo -e "请输入-> ${green}sudo $download_path/$script_name${plain} <-进行运行"
     rm "$0" # 删除当前脚本
 else
-    echo "发现已有依赖：${existing_deps[*]}"
-    echo "现已具备依赖：${dependencies[*]}"
-    echo "下载脚本失败，请再次尝试！（若多次尝试仍无法下载，建议手动下载）!"
+    echo -e "发现已有依赖：${existing_deps[*]}"
+    echo -e "现已具备依赖：${dependencies[*]}"
+    echo -e "${orange}下载脚本失败，请再次尝试！${plain}"
     rm "$0" # 删除当前脚本
 fi
