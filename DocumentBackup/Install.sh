@@ -12,6 +12,11 @@ dependencies=("rsync" "sshpass")
 mkdir -p /root/data/script
 download_path="/root/data/script"
 
+#字体颜色定义
+orange='\033[33m'
+green='\033[32m'
+plain='\033[0m'
+
 echo -e "检查依赖..."
 # 检查依赖是否已经安装
 check_dependencies() {
