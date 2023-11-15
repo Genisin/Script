@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 定义要忽略的文件夹名称的数组
-ignore_folders=("adguard")
+ignore_folders=("Adguard" "sshwifty" "pandora")
 updated_container_count=0
 
 # 遍历指定目录下的子目录
@@ -20,7 +20,7 @@ for dir in /root/data/docker_data/*/; do
         # 进入子目录
         cd "$dir" || exit 1
         # 检查 Docker Compose 文件是否存在
-        if [ -f "docker-compose.yml" ]; then
+        if [ -f "docker-compose.yml" ] || [ -f "docker-compose.yaml" ]; then
             # 拉取新镜像并启动容器
             docker-compose pull && docker-compose up -d
             updated_container_count=$((updated_container_count + 1))
