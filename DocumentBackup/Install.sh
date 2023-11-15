@@ -17,7 +17,7 @@ orange='\033[33m'
 green='\033[32m'
 plain='\033[0m'
 
-echo -e "检查依赖..."
+echo "检查依赖..."
 # 检查依赖是否已经安装
 check_dependencies() {
     local missing_deps=()
@@ -33,18 +33,18 @@ check_dependencies() {
     if [ ${#missing_deps[@]} -eq 0 ]; then
         return 0  # 返回0表示所有依赖已经安装
     else
-        echo -e "以下依赖未安装："
+        echo "以下依赖未安装："
         for missing_dep in "${missing_deps[@]}"; do
-            echo -e "$missing_dep"
+            echo "$missing_dep"
         done
         return 1  # 返回1表示存在未安装的依赖
     fi
 }
 
 if check_dependencies; then
-    echo -e "所有依赖已经安装，无需操作。"
+    echo "所有依赖已经安装，无需操作。"
 else
-    echo -e "安装依赖中..."
+    echo "安装依赖中..."
     for dep in "${dependencies[@]}"; do
         if ! command -v "$dep" >/dev/null 2>&1; then
             if command -v apt-get >/dev/null 2>&1; then
@@ -57,8 +57,7 @@ else
                 # Arch Linux
                 pacman -S --noconfirm "$dep"
             else
-                echo -e "抱歉，无法为该系统无法安装依赖"
-                echo -e "为不占用您的系统空间，将自动删除脚本！"
+                echo "无法为该系统安装依赖，为不占用系统空间，将自动删除脚本！"
                 rm "$0" # 删除当前脚本
                 exit 1
             fi
@@ -66,8 +65,7 @@ else
     done
 fi
 
-echo -e "依赖安装完成，开始下载脚本..."
-
+echo "依赖安装完成，开始下载脚本..."
 # 下载主脚本到指定文件夹并赋予执行权限
 if sudo wget -L -O "$download_path/$script_name" "$main_script_url" && sudo chmod +x "$download_path/$script_name"; then
     echo -e "发现已有依赖：${existing_deps[*]}"
