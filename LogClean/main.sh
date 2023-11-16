@@ -32,10 +32,10 @@ for log_file in "${log_files[@]}"; do
     if [ "$current_size" -gt "$max_log_size" ]; then
         > "$log_file"
         echo "    日志已清理    - $log_file"
+        echo "$(date +'%Y-%m-%d %H:%M:%S') -     日志已清理    - $log_file" >> "$logpath"
 
     else
         echo "日志未达到清理条件 - $log_file"
-        echo "$(date +'%Y-%m-%d %H:%M:%S') -     日志已清理    - $log_file" >> "$logpath"
         echo "$(date +'%Y-%m-%d %H:%M:%S') - 日志未达到清理条件 - $log_file" >> "$logpath"
     fi
 done
