@@ -10,12 +10,14 @@ log_dir="/"
 max_log_size=100   # 100Kb
 logpath="/var/log/logclean.log"
 
+echo "正在查找所有日志文件，请稍后..."
 # 使用 find 命令获取所有子文件夹中的 .log 文件并将结果保存到 log_files 数组
 log_files=()
 while IFS= read -r -d $'\0' file; do
     log_files+=("$file")
 done < <(find "$log_dir" -name "*.log" -print0)
 
+echo "日志文件查找完成，开始清理..."
 # 遍历日志文件列表并进行清理
 for log_file in "${log_files[@]}"; do
     # 获取当前日志文件大小
