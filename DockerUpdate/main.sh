@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 定义要忽略的文件夹名称的数组
-ignore_folders=("Adguard" "sshwifty" "pandora")
+ignore_folders=("Adguard" "sshwifty" "pandora" "xui")
 updated_container_count=0
 
 # 遍历指定目录下的子目录
