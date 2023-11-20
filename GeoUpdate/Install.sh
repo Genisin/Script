@@ -3,7 +3,7 @@
 # 脚本名字
 script_name="GeoUpdate.sh"
 # 此链接为主脚本下载地址 
-main_script_url="https://raw.githubusercontent.com/Genisin/script/GeoUpdate/main.sh"
+main_script_url="https://raw.githubusercontent.com/Genisin/Script/main/GeoUpdate/main.sh"
 
 #创建主脚本下载路径
 mkdir -p /root/data/script
