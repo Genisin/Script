@@ -9,6 +9,10 @@
 log_dir="/"
 max_log_size=0   # 100Kb
 
+#字体颜色定义
+orange='\033[33m'
+green='\033[32m'
+plain='\033[0m'
 echo "正在查找所有日志文件，请稍后..."
 # 使用 find 命令获取所有子文件夹中的 .log 文件并将结果保存到 log_files 数组
 log_files=()
@@ -34,19 +38,19 @@ for log_file in "${log_files[@]}"; do
 
     if [ "$current_size" -gt "$max_log_size" ]; then
         > "$log_file"
-        echo "    日志已清理    - $log_file"
+        echo -e "${green}-已重置=> $log_file${plain}"
     else
-        echo "日志未达到清理条件 - $log_file"
+        echo "-未达到清理条件 $log_file${plain}"
     fi
 done
 
 for log_file in "${log_files_gz[@]}"; do
-   rm "${log_file}" 1> /dev/null 2>&1 && echo "$(date +'%Y-%m-%d %H:%M:%S') - 已删除 ${log_file}"
+   rm "${log_file}" 1> /dev/null 2>&1 && echo -e "${orange}-已删除=> ${log_file}${plain}"
 
 done
 
 for log_file in "${log_n_files[@]}"; do
-   rm "${log_file}" 1> /dev/null 2>&1 && echo "$(date +'%Y-%m-%d %H:%M:%S') - 已删除 ${log_file}"
+   rm "${log_file}" 1> /dev/null 2>&1 && echo -e "${orange}-已删除=> ${log_file}${plain}"
 done
 
 rm /var/log/btmp.* /var/log/syslog.* /var/log/*.gz 1> /dev/null 2>&1
