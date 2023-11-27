@@ -23,9 +23,12 @@ JAIL_FILE="/etc/fail2ban/jail.d/sshd.local"
 if [ -e "$JAIL_FILE" ]; then
     rm -f "$JAIL_FILE" || exit_with_error "删除现有文件失败"
 fi
-echo -e "[sshd]\nenabled = true\nmode = normal\nbackend = systemd" | sudo tee -a "$JAIL_FILE" || exit_with_error "创建 sshd.local 失败"
+read -p "请输入SSH端口号：" SSH_PORT
+echo -e "[sshd]\nenabled = true\nport = $SSH_PORT\nfilter = sshd\nlogpath = /var/log/auth.log\nmaxretry = 3\nfindtime = 60\nbantime = 3600" | sudo tee -a "$JAIL_FILE" || exit_with_error "创建 sshd.local 失败"
 
 echo "Fail2ban 安装和配置成功完成，脚本正在删除..."
+echo "默认在1min内允许尝试3次，失败则封禁1h"
+echo "如需修改，请配置$JAIL_FILE"
 
 # 重启fail2ban
 systemctl restart fail2ban || exit_with_error "重启 fail2ban 失败"
