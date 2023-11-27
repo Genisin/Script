@@ -8,7 +8,6 @@
 #大小：1MB： 1048576 全清： 0 
 log_dir="/"
 max_log_size=0   # 100Kb
-logpath="/var/log/logclean.log"
 
 echo "正在查找所有日志文件，请稍后..."
 # 使用 find 命令获取所有子文件夹中的 .log 文件并将结果保存到 log_files 数组
@@ -36,11 +35,8 @@ for log_file in "${log_files[@]}"; do
     if [ "$current_size" -gt "$max_log_size" ]; then
         > "$log_file"
         echo "    日志已清理    - $log_file"
-        echo "$(date +'%Y-%m-%d %H:%M:%S') -     日志已清理    - $log_file" >> "$logpath"
-
     else
         echo "日志未达到清理条件 - $log_file"
-        echo "$(date +'%Y-%m-%d %H:%M:%S') - 日志未达到清理条件 - $log_file" >> "$logpath"
     fi
 done
 
