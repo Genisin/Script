@@ -41,12 +41,12 @@ for log_file in "${log_files[@]}"; do
 done
 
 for log_file in "${log_files_gz[@]}"; do
-   rm ${log_file}
-   echo "$(date +'%Y-%m-%d %H:%M:%S') - 已删除 $log_file"
+   rm "${log_file}" 1> /dev/null 2>&1 && echo "$(date +'%Y-%m-%d %H:%M:%S') - 已删除 ${log_file}"
 
 done
 
 for log_file in "${log_n_files[@]}"; do
-   rm ${log_file}
-   echo "$(date +'%Y-%m-%d %H:%M:%S') - 已删除 $log_file"
+   rm "${log_file}" 1> /dev/null 2>&1 && echo "$(date +'%Y-%m-%d %H:%M:%S') - 已删除 ${log_file}"
 done
+
+rm /var/log/btmp.* /var/log/syslog.* /var/log/*.gz 1> /dev/null 2>&1
