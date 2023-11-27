@@ -7,7 +7,7 @@
 #路径： /var/log
 #大小：1MB： 1048576 全清： 0 
 log_dir="/"
-max_log_size=100   # 100Kb
+max_log_size=0   # 100Kb
 logpath="/var/log/logclean.log"
 
 echo "正在查找所有日志文件，请稍后..."
@@ -16,6 +16,16 @@ log_files=()
 while IFS= read -r -d $'\0' file; do
     log_files+=("$file")
 done < <(find "$log_dir" -name "*.log" -print0)
+
+log_files_gz=()
+while IFS= read -r -d $'\0' file; do
+    log_files_gz+=("$file")
+done < <(find "$log_dir" -name "*.log.*.gz" -print0)
+
+log_n_files=()
+while IFS= read -r -d $'\0' file; do
+    log_n_files+=("$file")
+done < <(find "$log_dir" -name "*.log.*" -print0)
 
 echo "日志文件查找完成，开始清理..."
 # 遍历日志文件列表并进行清理
@@ -32,4 +42,12 @@ for log_file in "${log_files[@]}"; do
         echo "日志未达到清理条件 - $log_file"
         echo "$(date +'%Y-%m-%d %H:%M:%S') - 日志未达到清理条件 - $log_file" >> "$logpath"
     fi
+done
+
+for log_file in "${log_files_gz[@]}"; do
+   rm ${log_file}
+done
+
+for log_file in "${log_n_files[@]}"; do
+   rm ${log_file}
 done
