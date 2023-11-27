@@ -40,7 +40,7 @@ for log_file in "${log_files[@]}"; do
         > "$log_file"
         echo -e "${green}-已重置=> $log_file${plain}"
     else
-        echo "-未达到清理条件 $log_file"
+        echo "-未清理 $log_file"
     fi
 done
 
