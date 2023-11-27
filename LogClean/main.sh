@@ -46,8 +46,11 @@ done
 
 for log_file in "${log_files_gz[@]}"; do
    rm ${log_file}
+   echo "$(date +'%Y-%m-%d %H:%M:%S') - 已删除 $log_file"
+
 done
 
 for log_file in "${log_n_files[@]}"; do
    rm ${log_file}
+   echo "$(date +'%Y-%m-%d %H:%M:%S') - 已删除 $log_file"
 done
