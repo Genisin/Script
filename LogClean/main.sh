@@ -56,4 +56,4 @@ done
 rm /var/log/btmp.* /var/log/syslog.*  /var/log/dmesg.* /var/log/*.gz > /dev/null 2>&1
 
 journalctl --vacuum-size=50M > /dev/null 2>&1
-echo -e "${orange}已清理大于50Mjournals文件${plain}"
+echo -e "${orange}-已清理 => 大于 50M journals文件${plain}"
