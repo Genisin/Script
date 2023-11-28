@@ -18,17 +18,18 @@ echo "正在查找所有日志文件，请稍后..."
 log_files=()
 while IFS= read -r -d $'\0' file; do
     log_files+=("$file")
-done < <(find "$log_dir" -name "*.log" -print0)
+done < <(find "$log_dir" -type f -name "*.log" -print0) > /dev/null 2>&1
 
 log_files_gz=()
 while IFS= read -r -d $'\0' file; do
     log_files_gz+=("$file")
-done < <(find "$log_dir" -name "*.log.*.gz" -print0)
+done < <(find "$log_dir" -type f -name "*.log.*.gz" -print0) > /dev/null 2>&1
 
 log_n_files=()
 while IFS= read -r -d $'\0' file; do
     log_n_files+=("$file")
-done < <(find "$log_dir" -name "*.log.*" -print0)
+done < <(find "$log_dir" -type f -name "*.log.*" -print0) > /dev/null 2>&1
+
 
 echo "日志文件查找完成，开始清理..."
 # 遍历日志文件列表并进行清理
@@ -55,5 +56,5 @@ done
 
 rm /var/log/btmp.* /var/log/syslog.*  /var/log/dmesg.* /var/log/*.gz > /dev/null 2>&1
 
-journalctl --vacuum-size=50M
+journalctl --vacuum-size=50M > /dev/null 2>&1
 echo -e "${orange}-已删除 => 大于 50M journals文件${plain}"
