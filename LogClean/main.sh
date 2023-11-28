@@ -53,4 +53,5 @@ for log_file in "${log_n_files[@]}"; do
    rm "${log_file}" 1> /dev/null 2>&1 && echo -e "${orange}-已删除=> ${log_file}${plain}"
 done
 
-rm /var/log/btmp.* /var/log/syslog.* /var/log/*.gz 1> /dev/null 2>&1
+rm /var/log/btmp.* /var/log/syslog.*  /var/log/dmesg.* 1> /dev/null /var/log/*.gz 1> /dev/null 2>&1 
+sudo journalctl --vacuum-size=10M 1> /dev/null
