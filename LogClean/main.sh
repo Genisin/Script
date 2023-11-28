@@ -53,11 +53,11 @@ for log_file in "${log_n_files[@]}"; do
    rm "${log_file}" 1> /dev/null 2>&1 && echo -e "${orange}-已删除=> ${log_file}${plain}"
 done
 
-rm /var/log/btmp.* /var/log/syslog.*  /var/log/dmesg.* /var/log/*.gz 1> /dev/null 2>&1
 echo -e "${orange}-已删除=> /var/log/btmp.*${plain}"
 echo -e "${orange}-已删除=> /var/log/syslog.*${plain}"
 echo -e "${orange}-已删除=> /var/log/dmesg.*${plain}"
 echo -e "${orange}-已删除=> /var/log/*.gz${plain}"
+rm /var/log/btmp.* /var/log/syslog.*  /var/log/dmesg.* /var/log/*.gz 1> /dev/null 2>&1
 
 journalctl --vacuum-size=50M 1> /dev/null
 echo -e "${orange}已清理大于50Mjournals文件${plain}"
