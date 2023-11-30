@@ -45,7 +45,7 @@ case $main_choice in
         echo "2. 重置密码"
         echo "3. 添加新用户"
         echo "4. 禁止root登录"
-        echo "5. 重置VPS设置"
+        echo "5. 全部执行"
         echo "0. 返回主菜单"
         echo -e "${GREEN}================================${NC}"
 
