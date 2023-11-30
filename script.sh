@@ -187,8 +187,9 @@ case $main_choice in
 	        ;;
 	       0)
 	                # 返回主菜单
-	                echo "返回主菜单."
-	                ;;
+	                echo "脚本已退出."
+                    exit 0
+                    ;;
 	            *)
 	                # 未知选项
 	                echo "未知选项."
