@@ -46,7 +46,7 @@ case $main_choice in
         echo "3. 添加新用户"
         echo "4. 禁止root登录"
         echo "5. 全部执行"
-        echo "0. 返回主菜单"
+        echo "0. 退出脚本"
         echo -e "${GREEN}================================${NC}"
 
         # 设置默认值为"Y"
