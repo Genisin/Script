@@ -9,13 +9,13 @@ for dir in /root/data/docker_data/*/; do
     if [ -d "$dir" ]; then
         # 获取目录名
         dirname=$(basename "$dir")
-
+        
         # 检查是否是要忽略的目录
         if [[ " ${ignore_folders[*]} " =~ " $dirname " ]]; then
             echo "忽略目录: $dir"
             continue  # 跳过这个目录，继续下一个
         fi
-
+        
         echo "进入目录: $dir"
         # 进入子目录
         cd "$dir" || exit 1

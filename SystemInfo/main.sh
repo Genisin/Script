@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# 设置ANSI颜色码
+GREEN='\033[0;32m'
+NC='\033[0m' # 恢复默认颜色
 # 获取系统版本信息
 system_version=$(lsb_release -d | awk -F"\t" '{print $2}')
 # 获取系统架构
@@ -27,6 +30,16 @@ disk_size=$(df -h | awk '/\/$/ {print $2}')
 used_disk=$(df -h | awk '/\/$/ {print $3}')
 disk_usage=$(df | awk '/\/$/ {printf "% 5.2f", ($3/$2)*100}')
 
+#********IP信息********#
+ipv4_address=$(curl -s ipv4.ip.sb)
+ipv6_address=$(curl -s ipv6.ip.sb)
+ip_info=$(curl -s ipinfo.io)
+country=$(echo "$ip_info" | jq -r '.country')
+city=$(echo "$ip_info" | jq -r '.city')
+isp_info=$(echo "$ip_info" | jq -r '.org')
+ip_address=$(curl -s ip.p3terx.com | awk 'NR==1')
+
+
 # 格式化内存和硬盘使用量
 format_memory_usage=""
 format_disk_usage=""
@@ -50,33 +63,19 @@ else
 fi
 
 clear
-# 打印结果  
+# 打印结果
+echo -e "${GREEN}======系统信息=======${NC}"
 echo "系统架构：$system_architecture"
 echo "系统版本：$system_version"
 echo "内核版本：$kernel_version"
 echo "拥堵算法: $congestion_algorithm $queue_algorithm"
+echo -e "${GREEN}=======IP信息========${NC}"
+echo "IPv4:     $ipv4_address"
+echo "IPv6:     $ipv6_address"
+echo "优先IP:   $ip_address"
+echo "IP归属地:  $country $city"
+echo "IPv4运营商: $isp_info"
+echo -e "${GREEN}======硬件信息=======${NC}"
 echo "CPU型号： $cpu_model @  $cpu_cores 核"
-
-# 使用curl和ipinfo.io查询IP信息
-ipv4_address=$(curl -s ipv4.ip.sb)
-
-if [ -n "$ipv4_address" ] && [ "$ipv4_address" != "127.0.0.1" ]; then
-    echo "IPv4:     $ipv4_address"
-else
-    echo "IPv4:     不支持"
-fi
-
-ipv6_address=$(curl -s ipv6.ip.sb)
-
-if [ -n "$ipv6_address" ]; then
-    echo "IPv6:     $ipv6_address"
-else
-    echo "IPv6:     不支持"
-fi
-
-
-ip_address=$(curl -s ip.p3terx.com | awk 'NR==1')
-echo   "优先级IP: $ip_address"
-
 echo "硬盘占用/硬盘大小：   $format_disk_usage/$disk_size     占用率：$disk_usage%"
 echo "内存占用/内存大小：$format_memory_usage/$memory_size MB    占用率：$memory_usage%"
