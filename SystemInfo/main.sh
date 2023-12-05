@@ -49,7 +49,7 @@ else
     format_disk_usage=$(printf "% 5.2f GB" $used_disk_float)
 fi
 
-
+clear
 # 打印结果  
 echo "系统架构：$system_architecture"
 echo "系统版本：$system_version"
