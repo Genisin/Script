@@ -1,94 +1,82 @@
 #!/bin/bash
 
-GREEN='\033[0;32m'
-NC='\033[0m' # 恢复默认颜色
-
-  ipv4_address=$(curl -s ipv4.ip.sb)
-  ipv6_address=$(curl -s --max-time 2 ipv6.ip.sb)
-
-
-if [ "$(uname -m)" == "x86_64" ]; then
-  cpu_info=$(cat /proc/cpuinfo | grep 'model name' | uniq | sed -e 's/model name[[:space:]]*: //')
-else
-  cpu_info=$(lscpu | grep 'Model name' | sed -e 's/Model name[[:space:]]*: //')
-fi
-
-cpu_usage=$(top -bn1 | grep 'Cpu(s)' | awk '{print $2 + $4}')
-cpu_usage_percent=$(printf "%.2f" "$cpu_usage")%
-
-cpu_cores=$(nproc)
-
-mem_info=$(free -b | awk 'NR==2{printf "%.2f/%.2f MB (%.2f%%)", $3/1024/1024, $2/1024/1024, $3*100/$2}')
-
-disk_info=$(df -h | awk '$NF=="/"{printf "%d/%dGB (%s)", $3,$2,$5}')
-
-country=$(curl -s ipinfo.io/country)
-city=$(curl -s ipinfo.io/city)
-
-isp_info=$(curl -s ipinfo.io/org)
-
-cpu_arch=$(uname -m)
-
-hostname=$(hostname)
-
+# 获取系统版本信息
+system_version=$(lsb_release -d | awk -F"\t" '{print $2}')
+# 获取系统架构
+system_architecture=$(uname -m)
+# 获取内核版本
 kernel_version=$(uname -r)
 
 congestion_algorithm=$(sysctl -n net.ipv4.tcp_congestion_control)
 queue_algorithm=$(sysctl -n net.core.default_qdisc)
+# 获取CPU核数
+cpu_cores=$(nproc)
 
-    # 尝试使用 lsb_release 获取系统信息
-    os_info=$(lsb_release -ds 2>/dev/null)
+# 获取CPU型号和主频
+cpu_model=$(lscpu | grep "Model name" | awk -F ": " '{sub(/^[ \t]+/, "", $2); print $2}')
 
-    # 如果 lsb_release 命令失败，则尝试其他方法
-    if [ -z "$os_info" ]; then
-      # 检查常见的发行文件
-      if [ -f "/etc/os-release" ]; then
-        os_info=$(source /etc/os-release && echo "$PRETTY_NAME")
-      elif [ -f "/etc/debian_version" ]; then
-        os_info="Debian $(cat /etc/debian_version)"
-      elif [ -f "/etc/redhat-release" ]; then
-        os_info=$(cat /etc/redhat-release)
-      else
-        os_info="Unknown"
-      fi
-    fi
+# 获取内存大小（MB）
+memory_size=$(free -m | awk '/Mem:/ {print $2}')
 
-    current_time=$(date "+%Y-%m-%d %I:%M %p")
+# 获取当前内存占用（MB）
+used_memory=$(free -m | awk '/Mem:/ {print $3}')
+memory_usage=$(free | awk '/Mem:/ {printf "% 5.2f", ($3/$2)*100}')
 
-    swap_used=$(free -m | awk 'NR==3{print $3}')
-    swap_total=$(free -m | awk 'NR==3{print $2}')
+# 获取硬盘大小和占用情况
+disk_size=$(df -h | awk '/\/$/ {print $2}')
+used_disk=$(df -h | awk '/\/$/ {print $3}')
+disk_usage=$(df | awk '/\/$/ {printf "% 5.2f", ($3/$2)*100}')
 
-    if [ "$swap_total" -eq 0 ]; then
-        swap_percentage=0
-    else
-        swap_percentage=$((swap_used * 100 / swap_total))
-    fi
+# 格式化内存和硬盘使用量
+format_memory_usage=""
+format_disk_usage=""
 
-    swap_info="${swap_used}MB/${swap_total}MB (${swap_percentage}%)"
+if [ $(echo "$used_memory < 1024" | bc) -eq 1 ]; then
+    format_memory_usage=$(printf "% 5.2f MB" $used_memory)
+else
+    format_memory_usage=$(printf "% 5.2f GB" $(echo "scale=2; $used_memory / 1024" | bc))
+fi
 
-    runtime=$(cat /proc/uptime | awk -F. '{run_days=int($1 / 86400);run_hours=int(($1 % 86400) / 3600);run_minutes=int(($1 % 3600) / 60); if (run_days > 0) printf("%d天 ", run_days); if (run_hours > 0) printf("%d时 ", run_hours); printf("%d分\n", run_minutes)}')
-    clear
-    echo -e "${GREEN}------系统信息查询-------${NC}"
-    echo "主机名: $hostname"
-    echo "运营商: $isp_info"
-    echo "系统版本: $os_info"
-    echo "系统时间: $current_time"
-    echo "Linux版本: $kernel_version"
-    echo -e "${GREEN}------------------------${NC}"
-    echo "地理位置:  $country  $city"
-    echo "IPv4: $ipv4_address"
-    echo "IPv6: $ipv6_address"
-    echo -e "${GREEN}------------------------${NC}"
-    echo "CPU架构: $cpu_arch"
-    echo "CPU核心数: $cpu_cores"
-    echo "CPU占用: $cpu_usage_percent"
-    echo "CPU型号: $cpu_info"
-    echo -e "${GREEN}------------------------${NC}"
-    echo "硬盘占用: $disk_info"
-    echo "虚拟内存: $swap_info"
-    echo "物理内存: $mem_info"
-    echo -e "${GREEN}------------------------${NC}"
-    echo "拥堵算法: $congestion_algorithm $queue_algorithm"
-    echo -e "${GREEN}------------------------${NC}"
-    echo "运行时长: $runtime"
-    echo
+used_disk_f=${used_disk//[^0-9.]/}  # 移除非数字字符
+
+# 将字符串数字转换为浮点数
+used_disk_float=$(echo "$used_disk_f" | bc)
+
+# 使用 bc 进行浮点数比较
+if [ $(echo "$used_disk_float < 1" | bc) -eq 1 ]; then
+    format_disk_usage=$(printf "% 5.2f MB" $(echo "scale=2; $used_disk_float * 1024" | bc))
+else
+    format_disk_usage=$(printf "% 5.2f GB" $used_disk_float)
+fi
+
+
+# 打印结果  
+echo "系统架构：$system_architecture"
+echo "系统版本：$system_version"
+echo "内核版本：$kernel_version"
+echo "拥堵算法: $congestion_algorithm $queue_algorithm"
+echo "CPU型号： $cpu_model @  $cpu_cores 核"
+
+# 使用curl和ipinfo.io查询IP信息
+ipv4_address=$(curl -s ipv4.ip.sb)
+
+if [ -n "$ipv4_address" ] && [ "$ipv4_address" != "127.0.0.1" ]; then
+    echo "IPv4:     $ipv4_address"
+else
+    echo "IPv4:     不支持"
+fi
+
+ipv6_address=$(curl -s ipv6.ip.sb)
+
+if [ -n "$ipv6_address" ]; then
+    echo "IPv6:     $ipv6_address"
+else
+    echo "IPv6:     不支持"
+fi
+
+
+ip_address=$(curl -s ip.p3terx.com | awk 'NR==1')
+echo   "优先级IP: $ip_address"
+
+echo "硬盘占用/硬盘大小：   $format_disk_usage/$disk_size     占用率：$disk_usage%"
+echo "内存占用/内存大小：$format_memory_usage/$memory_size MB    占用率：$memory_usage%"
