@@ -38,7 +38,7 @@ for log_file in "${log_files[@]}"; do
     current_size=$(du -b "$log_file" | awk '{print $1}')
 
     if [ "$current_size" -gt "$max_log_size" ]; then
-        > "$log_file"
+        truncate -s 0 "$log_file"  # 使用truncate清空文件而不删除
         echo -e "${green}-已重置=> $log_file${plain}"
     else
         echo "-未清理 $log_file"
