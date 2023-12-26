@@ -15,10 +15,10 @@ green='\033[32m'
 plain='\033[0m'
 echo "正在查找所有日志文件，请稍后..."
 # 使用 find 命令获取所有子文件夹中的 .log 文件并将结果保存到 log_files 数组
-log_files=()
-while IFS= read -r -d $'\0' file; do
-    log_files+=("$file")
-done < <(find "$log_dir" -type f -name "*.log" -print0) > /dev/null 2>&1
+#log_files=()
+#while IFS= read -r -d $'\0' file; do
+#    log_files+=("$file")
+#done < <(find "$log_dir" -type f -name "*.log" -print0) > /dev/null 2>&1
 
 log_files_gz=()
 while IFS= read -r -d $'\0' file; do
@@ -33,17 +33,17 @@ done < <(find "$log_dir" -type f -name "*.log.*" -print0) > /dev/null 2>&1
 
 echo "日志文件查找完成，开始清理..."
 # 遍历日志文件列表并进行清理
-for log_file in "${log_files[@]}"; do
-    # 获取当前日志文件大小
-    current_size=$(du -b "$log_file" | awk '{print $1}')
-
-    if [ "$current_size" -gt "$max_log_size" ]; then
-        truncate -s 0 "$log_file"  # 使用truncate清空文件而不删除
-        echo -e "${green}-已重置=> $log_file${plain}"
-    else
-        echo "-未清理 $log_file"
-    fi
-done
+#for log_file in "${log_files[@]}"; do
+#    # 获取当前日志文件大小
+#    current_size=$(du -b "$log_file" | awk '{print $1}')
+#
+#    if [ "$current_size" -gt "$max_log_size" ]; then
+#        truncate -s 0 "$log_file"  # 使用truncate清空文件而不删除
+#        echo -e "${green}-已重置=> $log_file${plain}"
+#    else
+#        echo "-未清理 $log_file"
+#    fi
+#done
 
 for log_file in "${log_files_gz[@]}"; do
    rm "${log_file}" > /dev/null 2>&1 && echo -e "${orange}-已删除=> ${log_file}${plain}"
