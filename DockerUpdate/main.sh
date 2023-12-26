@@ -5,7 +5,7 @@ ignore_folders=("Microbin" "Dashboard")
 updated_container_count=0
 
 # 遍历指定目录下的子目录
-for dir in /root/data/docker_data/*/; do
+for dir in /home/data/docker/*/; do
     if [ -d "$dir" ]; then
         # 获取目录名
         dirname=$(basename "$dir")

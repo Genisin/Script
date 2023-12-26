@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # 设置备份和压缩相关的变量
-source_dir="/root/data/docker_data"   # 需保存文件夹
-backup_dir="/root/data/docker_data_backup"   # 备份存放文件夹
-backup_gz="/root/data/docker_data_backup_gz"   # 压缩包存放文件夹
-backup_filename="docker_data_$(date +\%Y\%m\%d).tar.gz"   # 压缩包命名规则
+source_dir="/home/data/docker"   # 需保存文件夹
+backup_dir="/home/data/docker_data"   # 备份存放文件夹
+backup_gz="/home/data/docker_backup"   # 压缩包存放文件夹
+backup_filename="docker_$(date +\%Y\%m\%d).tar.gz"   # 压缩包命名规则
 max_backups=3                     #压缩包最大备份数量
 logpath="/var/log/backup.log"     #日志存放文件夹
 
-target_path="/root/data/docker_data_backup_gz" #目标服务器存放文件位置（需要提前建好文件夹）
+target_path="/home/data/docker_backup" #目标服务器存放文件位置（需要提前建好文件夹）
 
 # 备份文件
 function perform_backup {
@@ -37,7 +37,7 @@ function perform_backup {
 
 # 清理多余备份文件
 function cleanup_backups {
-    local backups=($(find "$backup_gz" -maxdepth 1 -type f -name 'docker_data_*.tar.gz' -printf '%T@ %p\n' | sort -n | head -n -$max_backups | awk '{print $2}'))
+    local backups=($(find "$backup_gz" -maxdepth 1 -type f -name 'docker_*.tar.gz' -printf '%T@ %p\n' | sort -n | head -n -$max_backups | awk '{print $2}'))
     for old_backup in "${backups[@]}"; do
         rm -f "$old_backup"
         echo "删除多余备份: $old_backup"
@@ -50,7 +50,7 @@ function transfer_to_server {
      echo "传输启动"
     # 使用 sshpass 执行 scp 命令
     echo "查找最新备份文件中，请耐心等待..."
-    latest_backup=$(find "$backup_gz" -type f -name 'docker_data_*.tar.gz' -printf '%T@ %p\n' | sort -n | tail -n 1 | awk '{print $2}')
+    latest_backup=$(find "$backup_gz" -type f -name 'docker_*.tar.gz' -printf '%T@ %p\n' | sort -n | tail -n 1 | awk '{print $2}')
     echo "最新备份文件 $latest_backup 已找到，大小：$(du -m "$latest_backup" | cut -f1) MB"
     echo "-----------请输入目标服务器信息---------------"
     read -p "目标服务器地址(用户名@IP): " target_server

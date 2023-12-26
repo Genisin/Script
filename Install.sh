@@ -9,8 +9,8 @@ main_script_url="https://raw.githubusercontent.com/Genisin/script/main/文件夹
 dependencies=("依赖1" "依赖2")
 
 # 创建主脚本下载路径
-mkdir -p /root/data/script
-download_path="/root/data/script"
+mkdir -p /home/data/script
+download_path="/home/data/script"
 
 #字体颜色定义
 orange='\033[33m'
